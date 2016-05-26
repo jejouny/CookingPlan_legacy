@@ -9,13 +9,12 @@ header("location: profile.php");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html>
    <head>
-      <title>Planning repas</title>
+      <title>Cooking plan</title>
       <link href="style.css" rel="stylesheet" type="text/css">
    </head>
    <body>
       <div id="main">
          <img src="res/banner.svg" style="max-width: 100%"/>
-         <h1>Planning des repas</h1>
          <div id="login">
             <form action="" method="post">
                <label>Identifiant :</label>
