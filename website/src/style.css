@@ -1,0 +1,102 @@
+
+
+
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+/*----------------------------------------------
+CSS Settings For HTML Div ExactCenter
+------------------------------------------------*/
+#main {
+width:960px;
+margin:10px 10px 10px 10px;
+font-family:raleway
+}
+span {
+color:red
+}
+h2 {
+background-color:#FEFFED;
+text-align:center;
+border-radius:10px 10px 0 0;
+margin:-10px -40px;
+padding:15px
+}
+hr {
+border:0;
+border-bottom:1px solid #ccc;
+margin:10px -40px;
+margin-bottom:30px
+}
+#login {
+width:300px;
+float:left;
+border-radius:10px;
+font-family:raleway;
+border:2px solid #ccc;
+padding:25px 40px 25px;
+margin-top:10px
+}
+#upload {
+width:300px;
+min-height:230px;
+max-height:230px;
+border-radius:10px;
+font-family:raleway;
+border:2px solid #ccc;
+padding:20px 40px 10px;
+margin-top:10px
+}
+#fileTable {
+width:600px;
+min-height:220px;
+max-height:220px;
+border-radius:10px;
+font-family:raleway;
+border:2px solid #ccc;
+padding:10px 10px 10px;
+margin-top:10px;
+overflow: auto
+}
+#uploadTable {
+/*border: 1px solid black;*/
+border:none;
+width:100%;
+}
+input[type=text],input[type=password],input[type=file] {
+width:99.5%;
+padding:10px;
+margin-top:8px;
+border:1px solid #ccc;
+padding-left:5px;
+font-size:16px;
+font-family:raleway
+}
+input[type=submit] {
+width:100%;
+background-color:#2887C6;
+color:#fff;
+border:2px solid #2887C6;
+padding:10px;
+font-size:20px;
+cursor:pointer;
+border-radius:5px;
+margin-bottom:15px
+}
+#profile {
+padding:10px;
+font-size:15px;
+font-family:raleway;
+background-color:#2887C6;
+color:#FFFFFF
+}
+#logout {
+float:right;
+}
+a {
+text-decoration:underline;
+color:#FFFFFF;
+}
+i {
+color:#FFFFFF;
+}
+
+
