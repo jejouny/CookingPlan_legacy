@@ -14,7 +14,7 @@ header("location: profile.php");
    </head>
    <body>
       <div id="main">
-         <img src="banner.svg" style="max-width: 100%"/>
+         <img src="res/banner.svg" style="max-width: 100%"/>
          <h1>Planning des repas</h1>
          <div id="login">
             <form action="" method="post">
