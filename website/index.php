@@ -14,9 +14,8 @@ header("location: profile.php");
       <link href="style.css" rel="stylesheet" type="text/css">
    </head>
    <body>
-      <div id="main">
-         <img src="res/banner.svg" style="max-width: 100%"/>
-         <div id="login">
+      <img src="res/banner.svg" style="max-width: 100%"/>
+      <div id="login">
             <form action="" method="post">
                <label>Identifiant :</label>
                <input id="name" name="login" placeholder="identifiant" type="text">
@@ -30,6 +29,5 @@ header("location: profile.php");
                <span><?php echo $error; ?></span>
             </form>
          </div>
-      </div>
    </body>
 </html>

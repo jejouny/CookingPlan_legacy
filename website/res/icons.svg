@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -87,6 +87,9 @@
        height="531.42859"
        x="1080"
        y="97.14286"
-       transform="translate(0,-1947.6378)" />
+       transform="translate(0,-1947.6378)"
+       inkscape:export-filename="/home/jjouber/Documents/Perso/cooking_plan/website/res/favicon.png"
+       inkscape:export-xdpi="4.0570059"
+       inkscape:export-ydpi="4.0570059" />
   </g>
 </svg>

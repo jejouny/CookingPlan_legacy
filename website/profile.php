@@ -5,7 +5,8 @@ include('session.php');
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html>
    <head>
-      <title>Planning des repas</title>
+      <title>Cooking Plan</title>
+      <link rel="icon" href="res/favicon.png"/>
       <link href="style.css" rel="stylesheet" type="text/css">
    </head>
    <body>
