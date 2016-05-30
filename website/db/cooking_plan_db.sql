@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 26, 2016 at 02:43 PM
+-- Generation Time: May 30, 2016 at 05:49 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -19,6 +19,90 @@ SET time_zone = "+00:00";
 --
 -- Database: `cooking_plan_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ingredients`
+--
+
+CREATE TABLE IF NOT EXISTS `ingredients` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `price` decimal(6,0) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ingredients`
+--
+
+INSERT INTO `ingredients` (`id`, `name`, `price`) VALUES
+(1, 'Pommes de terre', 0),
+(2, 'Lardons', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipes`
+--
+
+CREATE TABLE IF NOT EXISTS `recipes` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(512) DEFAULT NULL,
+  `description` varchar(512) DEFAULT NULL,
+  `type_id` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `recipe_id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `recipes`
+--
+
+INSERT INTO `recipes` (`id`, `name`, `description`, `type_id`) VALUES
+(1, 'Plat au four', 'Un plat d''hiver avec des pommes de terre :P', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipes_owners`
+--
+
+CREATE TABLE IF NOT EXISTS `recipes_owners` (
+  `recipe_id` int(255) NOT NULL,
+  `user_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `recipes_owners`
+--
+
+INSERT INTO `recipes_owners` (`recipe_id`, `user_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipe_types`
+--
+
+CREATE TABLE IF NOT EXISTS `recipe_types` (
+  `type_id` int(10) NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `recipe_types`
+--
+
+INSERT INTO `recipe_types` (`type_id`, `type_name`) VALUES
+(1, 'Entrée'),
+(2, 'Plat principal'),
+(3, 'Dessert');
 
 -- --------------------------------------------------------
 
