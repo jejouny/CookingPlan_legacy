@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 30, 2016 at 05:49 PM
+-- Generation Time: May 31, 2016 at 09:36 AM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -51,17 +51,30 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `name` varchar(512) DEFAULT NULL,
   `description` varchar(512) DEFAULT NULL,
+  `picture` varchar(255) DEFAULT NULL,
   `type_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `recipe_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `name`, `description`, `type_id`) VALUES
-(1, 'Plat au four', 'Un plat d''hiver avec des pommes de terre :P', 2);
+INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`) VALUES
+(1, 'Plat au four', 'Un plat d''hiver avec des pommes de terre :P', '1.jpeg', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipes_ingredients`
+--
+
+CREATE TABLE IF NOT EXISTS `recipes_ingredients` (
+  `recipe_id` int(10) NOT NULL,
+  `ingredient_id` int(10) NOT NULL,
+  `ingredient_amount` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -117,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`,`login`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Users' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Users' AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
