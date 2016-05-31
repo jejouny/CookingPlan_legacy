@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 31, 2016 at 09:36 AM
+-- Generation Time: May 31, 2016 at 09:53 AM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `ingredients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
   `price` decimal(6,0) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
@@ -37,9 +38,9 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
 -- Dumping data for table `ingredients`
 --
 
-INSERT INTO `ingredients` (`id`, `name`, `price`) VALUES
-(1, 'Pommes de terre', 0),
-(2, 'Lardons', 0);
+INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`) VALUES
+(1, 'Pommes de terre', '1.jpeg', 0),
+(2, 'Lardons', '2.jpeg', 0);
 
 -- --------------------------------------------------------
 
