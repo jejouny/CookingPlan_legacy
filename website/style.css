@@ -1,7 +1,7 @@
 
-
-
 @import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(http://fonts.googleapis.com/icon?family=Material+Icons);
+
 /*----------------------------------------------
 CSS Settings For HTML Div ExactCenter
 ------------------------------------------------*/
@@ -19,12 +19,6 @@ text-align:center;
 border-radius:10px 10px 0 0;
 margin:-10px -40px;
 padding:15px
-}
-hr {
-border:0;
-border-bottom:1px solid #ccc;
-margin:10px -40px;
-margin-bottom:30px
 }
 #banner {
 max-width: 98%;
@@ -75,8 +69,52 @@ a {
 text-decoration:underline;
 color:#FFFFFF;
 }
-i {
-color:#FFFFFF;
+
+/********* For tab panel **********/
+.tab-controller-wrap{
+  margin-top: 30px;
+  /*border:1px solid;*/
+  text-align:center;
+}
+.tab-control, .tab-control:hover, .tab-control.active{
+  color: #fff;
+  text-decoration: none;
+}
+.tab-control {
+  padding: 10px 20px;
+  font-family:raleway;
+  background-color:#0a6392;
+  color:#fff;
+  border:0px solid #0a6392;
+  font-size:20px;
+  cursor:pointer;
+  border-radius:5px;
+}
+.tab-control:hover{
+  background-color: #70c9f8;
+  border:0px solid #70c9f8;
+}
+.tab-control.active{
+  background-color: #2887C6;
+  border:2px solid #2887C6;
 }
 
+.content-wrapper > div{
+  background-color: #fff;
+  padding: 20px;
+  line-height: 200%;
+  font-family:raleway;
+  /*border:1px solid;*/
+}
+
+
+/*******/
+.tableItem{
+border-radius:10px;
+font-family:raleway;
+border:2px solid #ccc;
+padding:10px 10px 10px;
+margin-top:10px;
+text-align:left;
+}
 
