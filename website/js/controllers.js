@@ -16,10 +16,4 @@ app.controller('filterCtrl', function($scope) {
   $scope.sortReverse  = false;  // set the default sort order
   $scope.searchIngredients   = '';     // set the default search/filter term
 
- // create the list of the ingredients
- $scope.ingredients = [
- { name: 'Pommes de terre', price: '0.0'},
- { name: 'Lardons', price: '0.0'}
- ];
-
 });

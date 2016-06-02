@@ -1,20 +1,33 @@
 <?php
 
-//
+// To init the angular structure from the sql request
+$query_result = mysql_query("select name, picture, price from ingredients", $connection);
+if (!$query_result) {
+   echo mysql_error();
+}
 
-$ingredientsTable = "<div class=\"container\" ng-controller=\"filterCtrl\">";
+$ingredientsNgArray = "ingredients=[";
+$comma = "";
+while ($row = mysql_fetch_assoc($query_result)) {
+   $ingredientsNgArray = $ingredientsNgArray . $comma  . "{name:'" . $row['name'] . "', picture:'" . $row['picture'] . "', price:'" . $row['price'] . "'}";
+   $comma = ", ";
+}
+$ingredientsNgArray = $ingredientsNgArray . "]";
+
+// Provide the ingredient array to Angular
+$ingredientsTable = "<div class=\"container\" ng-controller=\"filterCtrl\" ng-init=\"" . $ingredientsNgArray . "\">";
 $ingredientsTable = $ingredientsTable . "<form>";
 $ingredientsTable = $ingredientsTable . "<div class=\"form-group\">";
 $ingredientsTable = $ingredientsTable . "<div style=\"border:1px solid #ccc;border-radius:4px;\">";
 $ingredientsTable = $ingredientsTable . "<i class=\"material-icons\">search</i>";
-$ingredientsTable = $ingredientsTable . "<input type=\"text\" style=\"border:0px;\" placeholder=\"Rechercher une recette\" ng-model=\"searchIngredient\">";
+$ingredientsTable = $ingredientsTable . "<input type=\"text\" style=\"border:0px;\" placeholder=\"Rechercher un ingrédient\" ng-model=\"searchIngredient\">";
 $ingredientsTable = $ingredientsTable . "</div>";
 $ingredientsTable = $ingredientsTable . "</div>";
 $ingredientsTable = $ingredientsTable . "</form>";
 
 $ingredientsTable = $ingredientsTable . "<div style=\"overflow:auto;\"><table>";
 $ingredientsTable = $ingredientsTable . "<tr ng-repeat=\"ingredient in ingredients | filter:searchIngredient\">"; // To filter on ingredient names
-$ingredientsTable = $ingredientsTable . "<td><div class=\"tableItem\">{{ingredient.name}}</div></td>";
+$ingredientsTable = $ingredientsTable . "<td><div class=\"tableItem\"><img src=\"uploads/ingredient_pictures/{{ingredient.picture}}\" style=\"width:100px;height:100px;\">{{ingredient.name}}</div></td>";
 $ingredientsTable = $ingredientsTable . "</tr>";
 $ingredientsTable = $ingredientsTable . "</table></div>";
 $ingredientsTable = $ingredientsTable . "</div>";
