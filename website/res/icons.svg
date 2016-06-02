@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="1476.6876"
-     inkscape:cy="2637.1168"
+     inkscape:zoom="0.7"
+     inkscape:cx="2513.5657"
+     inkscape:cy="2534.1597"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -91,5 +91,35 @@
        inkscape:export-filename="/home/jjouber/Documents/Perso/cooking_plan/website/res/favicon.png"
        inkscape:export-xdpi="4.0570059"
        inkscape:export-ydpi="4.0570059" />
+    <rect
+       style="opacity:0.97132616;color:#000000;fill:none;stroke:#2887c6;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;fill-opacity:1"
+       id="rect4980-5"
+       width="531.42859"
+       height="531.42859"
+       x="1955.6873"
+       y="-1845.4543"
+       inkscape:export-filename="/home/jjouber/Documents/Perso/cooking_plan/website/res/favicon.png"
+       inkscape:export-xdpi="4.0570059"
+       inkscape:export-ydpi="4.0570059" />
+    <path
+       style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:11.73908519999999989;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 2145.6036,-1769.2989 -36.9904,67.1024 -71.8101,0 c -35.0373,0 -63.2504,28.2132 -63.2504,63.2504 l 0,185.9605 c 0,35.0373 28.2131,63.2505 63.2504,63.2505 l 371.7376,0 c 35.0373,0 63.2504,-28.2132 63.2504,-63.2505 l 0,-185.9605 c 0,-35.0372 -28.2131,-63.2504 -63.2504,-63.2504 l -58.7566,0 -34.239,-67.1024 -169.9415,0 z m 82.2653,87.9209 c 71.7913,0 129.9859,58.1946 129.9859,129.986 0,71.7912 -58.1946,129.9858 -129.9859,129.9858 -71.7914,0 -129.9859,-58.1946 -129.9859,-129.9858 0,-71.7914 58.1945,-129.986 129.9859,-129.986 z m 183.2703,4.5244 c 18.9097,0 34.239,15.3293 34.239,34.239 0,18.9098 -15.3293,34.239 -34.239,34.239 -18.9097,0 -34.239,-15.3292 -34.239,-34.239 0,-18.9097 15.3293,-34.239 34.239,-34.239 z m -184.3403,50.5942 c -42.4481,0 -76.8544,34.437 -76.8544,76.885 0,42.448 34.4063,76.8543 76.8544,76.8543 42.4478,0 76.8849,-34.4063 76.8849,-76.8543 0,-42.448 -34.4371,-76.885 -76.8849,-76.885 z"
+       id="rect3029"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.01;color:#000000;fill:none;stroke:#8c8e8f;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4980-5-0"
+       width="531.42859"
+       height="531.42859"
+       x="2614.2856"
+       y="-1870.495"
+       inkscape:export-filename="/home/jjouber/Documents/Perso/cooking_plan/website/res/no_picture.png"
+       inkscape:export-xdpi="42.934441"
+       inkscape:export-ydpi="42.934441" />
+    <path
+       style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:11.14395905;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 2807.1686,-1790.7853 -21.6856,39.3664 44.6172,57.0768 c 16.6039,-8.3142 35.3445,-12.9936 55.1784,-12.9936 68.1517,0 123.4095,55.2579 123.4095,123.4095 0,30.6269 -11.1649,58.6451 -29.6363,80.2162 l 57.2253,73.2448 20.4991,0 c 33.261,0 60.0434,-26.7825 60.0434,-60.0435 l 0,-176.5408 c 0,-33.2609 -26.7824,-60.0434 -60.0434,-60.0434 l -55.7717,0 -32.484,-63.6924 -161.3519,0 z m -103.2665,63.6924 c -33.261,0 -60.0435,26.7825 -60.0435,60.0434 l 0,176.5408 c 0,33.261 26.7825,60.0435 60.0435,60.0435 l 260.1092,0 -31.0006,-39.6631 c -14.6846,6.166 -30.8068,9.582 -47.7321,9.582 -68.152,0 -123.4095,-55.2281 -123.4095,-123.3799 0,-27.6866 9.1371,-53.2503 24.5334,-73.8379 l -54.1992,-69.3288 -28.3012,0 z m 355.366,24.0588 c 17.9511,0 32.484,14.5329 32.484,32.484 0,17.9511 -14.5329,32.5137 -32.484,32.5137 -17.951,0 -32.5136,-14.5626 -32.5136,-32.5137 0,-17.9511 14.5626,-32.484 32.5136,-32.484 z m -174.9982,48.0289 c -7.3094,0 -14.3753,1.0837 -21.0331,3.0851 l 83.7464,107.1823 c 6.5126,-10.9163 10.2644,-23.6564 10.2644,-37.2897 0,-40.2962 -32.6819,-72.9777 -72.9777,-72.9777 z m -64.8493,39.5443 c -5.1784,10.0237 -8.1284,21.3758 -8.1284,33.4334 0,40.296 32.6815,72.948 72.9777,72.948 5.789,0 11.39,-0.6839 16.7908,-1.958 l -81.6401,-104.4234 z"
+       id="rect3029-7"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
