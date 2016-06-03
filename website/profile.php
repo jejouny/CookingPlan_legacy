@@ -1,6 +1,7 @@
 <?php
 include('session.php');
 include('ingredients.php');
+include('recipes.php');
 ?>
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -26,7 +27,7 @@ include('ingredients.php');
             <a href="#history" class="tab-control" ng-class="{'active':tabSelected=='#history'}">Historique des plannings</a>
             <div class="content-wrapper">
                <div id="ingredients" class="ng-hide" ng-show="tabSelected=='#ingredients'"><?php echo $ingredientsTable; ?></div>
-               <div id="recipes" class="ng-hide" ng-show="tabSelected=='#recipes'">Les recettes.</div>
+               <div id="recipes" class="ng-hide" ng-show="tabSelected=='#recipes'"><?php echo $recipesTable; ?></div>
                <div id="createPlanning" class="ng-hide" ng-show="tabSelected=='#createPlanning'">Le planning.</div>
                <div id="history" class="ng-hide" ng-show="tabSelected=='#history'">L'historique.</div>
             </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 03, 2016 at 04:23 PM
+-- Generation Time: Jun 03, 2016 at 05:37 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -58,14 +58,17 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `type_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `recipe_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `recipes`
 --
 
 INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`) VALUES
-(1, 'Plat au four', 'Un plat d''hiver avec des pommes de terre :P', '1.jpeg', 2);
+(1, 'Recette AAAAAA', 'Description de la recette AAAAA', '1.jpeg', 2),
+(2, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2),
+(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3),
+(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2);
 
 -- --------------------------------------------------------
 

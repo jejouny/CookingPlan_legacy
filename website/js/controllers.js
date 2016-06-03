@@ -11,9 +11,15 @@ app.controller("tabCtrl",function($scope){
 });
 
 // To filter ingredients
-app.controller('filterCtrl', function($scope) {
+app.controller('filterIngredientCtrl', function($scope) {
   $scope.sortType     = 'name'; // set the default sort type
   $scope.sortReverse  = false;  // set the default sort order
   $scope.searchIngredients   = '';     // set the default search/filter term
+});
 
+// To filter recipes
+app.controller('filterRecipeCtrl', function($scope) {
+  $scope.sortType     = 'name'; // set the default sort type
+  $scope.sortReverse  = false;  // set the default sort order
+  $scope.searchIngredients   = '';     // set the default search/filter term
 });

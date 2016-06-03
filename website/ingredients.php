@@ -29,12 +29,11 @@ while ($row = mysql_fetch_assoc($query_result)) {
    $ingredientsNgArray = $ingredientsNgArray . $comma  . "{name:'" . $ingredientName . "', picture:'" . $ingredientPicture . "', price:'" . $ingredientPrice . "'}";
    $comma = ", ";
 }
-//msql_free_result($query_result);
 
 $ingredientsNgArray = $ingredientsNgArray . "]";
 
 // Provide the ingredient array to Angular
-$ingredientsTable = "\n<div class=\"tab-content\" ng-controller=\"filterCtrl\" ng-init=\"" . $ingredientsNgArray . "\">\n";
+$ingredientsTable = "\n<div class=\"tab-content\" ng-controller=\"filterIngredientCtrl\" ng-init=\"" . $ingredientsNgArray . "\">\n";
 $ingredientsTable = $ingredientsTable . "   <form class=\"search-bar\">\n";
 $ingredientsTable = $ingredientsTable . "     <table>\n";
 $ingredientsTable = $ingredientsTable . "        <tr>\n";
