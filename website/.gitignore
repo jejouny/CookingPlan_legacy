@@ -1,2 +1,3 @@
 # Exclude phpmyadmin directory
 /phpmyadmin
+*.swp
