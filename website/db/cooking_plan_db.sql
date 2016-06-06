@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 03, 2016 at 05:37 PM
+-- Generation Time: Jun 06, 2016 at 10:11 AM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -23,6 +23,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `accounts`
+--
+
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `name`) VALUES
+(1, 'Administator account'),
+(2, 'Guest account 1');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ingredients`
 --
 
@@ -31,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
   `name` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `price` decimal(6,0) NOT NULL,
+  `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -38,11 +59,11 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
 -- Dumping data for table `ingredients`
 --
 
-INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`) VALUES
-(1, 'AAAAAAAAA', '1.jpeg', 0),
-(2, 'BBBBBBBBB', '2.jpeg', 0),
-(3, 'CCCCCCCC', '3.jpg', 1),
-(4, 'DDDDDDDD', '4.jpeg', 1);
+INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`, `account_id`) VALUES
+(1, 'AAAAAAAAA', '1.jpeg', 0, 2),
+(2, 'BBBBBBBBB', '2.jpeg', 0, 2),
+(3, 'CCCCCCCC', '3.jpg', 1, 2),
+(4, 'DDDDDDDD', '4.jpeg', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -56,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `description` varchar(512) DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `type_id` int(10) NOT NULL,
+  `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `recipe_id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -64,11 +86,11 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`) VALUES
-(1, 'Recette AAAAAA', 'Description de la recette AAAAA', '1.jpeg', 2),
-(2, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2),
-(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3),
-(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2);
+INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `account_id`) VALUES
+(1, 'Recette AAAAAA', 'Description de la recette AAAAA', '1.jpeg', 2, 2),
+(2, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 2),
+(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 2),
+(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -81,26 +103,6 @@ CREATE TABLE IF NOT EXISTS `recipes_ingredients` (
   `ingredient_id` int(10) NOT NULL,
   `ingredient_amount` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `recipes_owners`
---
-
-CREATE TABLE IF NOT EXISTS `recipes_owners` (
-  `recipe_id` int(255) NOT NULL,
-  `user_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `recipes_owners`
---
-
-INSERT INTO `recipes_owners` (`recipe_id`, `user_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3);
 
 -- --------------------------------------------------------
 
@@ -133,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `admin` int(1) NOT NULL,
+  `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`,`login`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Users' AUTO_INCREMENT=4 ;
@@ -142,10 +144,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `admin`) VALUES
+INSERT INTO `users` (`id`, `login`, `password`, `account_id`) VALUES
 (1, 'cooking_plan_admin', 'Emmanuelle_83', 1),
-(2, 'julien', 'Clarisse_14', 0),
-(3, 'emmanuelle', 'Clarisse_14', 0);
+(2, 'julien', 'Clarisse_14', 2),
+(3, 'emmanuelle', 'Clarisse_14', 2);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

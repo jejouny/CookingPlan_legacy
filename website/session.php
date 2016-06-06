@@ -7,10 +7,10 @@ session_start();// Starting Session
 // Storing Session
 $user_check=$_SESSION['login'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql=mysql_query("select login, admin from users where login='$user_check'", $connection);
+$ses_sql=mysql_query("select login, account_id from users where login='$user_check'", $connection);
 $row = mysql_fetch_assoc($ses_sql);
 $login =$row['login'];
-$is_admin=$row['admin'];
+$account=$row['account_id'];
 if(!isset($login)){
 mysql_close($connection); // Closing Connection
 header('Location: index.php'); // Redirecting To Home Page

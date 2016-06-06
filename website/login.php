@@ -27,6 +27,7 @@ $query = mysql_query("select * from users where password='$password' AND login='
 $rows = mysql_num_rows($query);
 if ($rows == 1) {
 $_SESSION['login']=$login; // Initializing Session
+$account=$rows['account_id'];
 header("location: profile.php"); // Redirecting To Other Page
 } else {
 $error = "Identifiant ou mot de passe invalide";

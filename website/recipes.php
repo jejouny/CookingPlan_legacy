@@ -2,7 +2,7 @@
 
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("select name, picture, description from recipes", $connection);
+$query_result = mysql_query("select name, picture, description from recipes where account_id='$account'", $connection);
 if (!$query_result) {
    echo mysql_error();
 }
