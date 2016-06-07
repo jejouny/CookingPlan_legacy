@@ -65,7 +65,7 @@ color:#FFFFFF
 #logout {
 float:right;
 }
-a {
+#logoutLink {
 text-decoration:underline;
 color:#FFFFFF;
 }
@@ -76,11 +76,11 @@ color:#FFFFFF;
   /*border:1px solid;*/
   text-align:center;
 }
-.tab-control, .tab-control:hover, .tab-control.active{
+.tab-control, .read-more-button , .tab-control:hover, .tab-control.active, .read-more-button:hover, .read-more-button.active {
   color: #fff;
   text-decoration: none;
 }
-.tab-control {
+.tab-control, .read-more-button {
   padding: 10px 20px;
   font-family:raleway;
   background-color:#0a6392;
@@ -90,11 +90,11 @@ color:#FFFFFF;
   cursor:pointer;
   border-radius:5px;
 }
-.tab-control:hover{
+.tab-control:hover, .read-more-button:hover{
   background-color: #70c9f8;
   border:0px solid #70c9f8;
 }
-.tab-control.active{
+.tab-control.active, .read-more-button.active{
   background-color: #2887C6;
   border:2px solid #2887C6;
 }
@@ -106,8 +106,7 @@ color:#FFFFFF;
   font-family:raleway;
 }
 
-
-/*******/
+/********* For item list + search input **********/
 .tab-content{
 padding:40px 40px 10px 40px;
 }
@@ -171,6 +170,8 @@ font-size:20px;
 
 .search-result-icon-cell{
 width:100px;
+text-align:left;
+vertical-align:top;
 }
 
 .search-result-icon-cell > div{
@@ -183,9 +184,19 @@ overflow:hidden;
 text-align:left;
 padding-left: 10px;
 padding-right: 10px;
+line-height:100%;
+}
+.search-result-description-cell > p{
+font-family:raleway;
+font-size:16px;
+white-space:pre;
+}
+
+.search-result-description-cell > a{
+font-size:12px;
+padding:5px 10px;
 }
 
 .search-result-price-cell{
 width:100px;
 }
-

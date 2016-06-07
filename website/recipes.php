@@ -2,7 +2,7 @@
 
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("select name, picture, description from recipes where account_id='$account'", $connection);
+$query_result = mysql_query("select id, name, picture, description from recipes where account_id='$account'", $connection);
 if (!$query_result) {
    echo mysql_error();
 }
@@ -10,6 +10,7 @@ if (!$query_result) {
 $recipesNgArray = "recipes=[";
 $comma = "";
 while ($row = mysql_fetch_assoc($query_result)) {
+   $recipeId = $row['id'];
    $recipeName = $row['name'];
    $recipePicture = $row['picture'];
    // Missing picture
@@ -29,7 +30,7 @@ while ($row = mysql_fetch_assoc($query_result)) {
    $recipeDescription = $row['description'];
 
    //$recipeType = $row['price'];
-   $recipesNgArray = $recipesNgArray . $comma  . "{name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription . "'}";
+   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription . "'}";
    $comma = ", ";
 }
 
@@ -45,15 +46,18 @@ $recipesTable = $recipesTable . "           <td class=\"search-input-cell\"><inp
 $recipesTable = $recipesTable . "        </tr>\n";
 $recipesTable = $recipesTable . "      </table>\n";
 $recipesTable = $recipesTable . "   </form>\n";
-
 $recipesTable = $recipesTable . "   <div class=\"search-result\">\n";
 $recipesTable = $recipesTable . "      <table>\n";
 $recipesTable = $recipesTable . "         <tr ng-repeat=\"recipe in recipes | filter:{name : searchRecipe}\">\n"; // To filter on recipe names
 $recipesTable = $recipesTable . "            <td class=\"search-result-cell\">\n";
-$recipesTable = $recipesTable . "               <table class=\"search-result-cell-content\">\n";
+$recipesTable = $recipesTable . "               <table class=\"search-result-cell-content\" ng-controller=\"readMoreCtrl\">\n";
 $recipesTable = $recipesTable . "                  <tr>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-icon-cell\"><div><img src=\"{{recipe.picture}}\" height=\"100px\"></div></td>\n";
-$recipesTable = $recipesTable . "                     <td class=\"search-result-description-cell\" style=\"vertical-align:top;\">{{recipe.name}}<font style=\"font-family:raleway;font-size:16px;\"><pre>{{recipe.description}}</font></td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-result-description-cell\" style=\"vertical-align:top;\">\n";
+$recipesTable = $recipesTable . "                        {{recipe.name}}\n";
+$recipesTable = $recipesTable . "                        <p>{{displayedContent}}</p>\n";
+$recipesTable = $recipesTable . "                        <a href=\"\" class=\"read-more-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
+$recipesTable = $recipesTable . "                     </td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-price-cell\">{{recipe.price}} €</td>\n";
 $recipesTable = $recipesTable . "                  </tr>\n";
 $recipesTable = $recipesTable . "               </table>\n";
@@ -62,5 +66,4 @@ $recipesTable = $recipesTable . "         </tr>\n";
 $recipesTable = $recipesTable . "      </table>\n";
 $recipesTable = $recipesTable . "   </div>\n";
 $recipesTable = $recipesTable . "</div>\n";
-
 ?>

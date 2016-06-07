@@ -17,7 +17,7 @@ include('recipes.php');
    <body>
       <div id="profile">
          <b id="welcome">Bienvenue <i><?php echo $login;?></i></b>
-         <b id="logout"><a href="logout.php">D&eacuteconnexion</a></b>
+         <b id="logout"><a id="logoutLink" href="logout.php">D&eacuteconnexion</a></b>
       </div>
       <div class="container" ng-app="cooking_plan">
          <div class="tab-controller-wrap" ng-controller="tabCtrl" ng-click="tabChange($event)">
