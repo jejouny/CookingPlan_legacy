@@ -71,7 +71,7 @@ $recipesTable = $recipesTable . "                  <tr>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-icon-cell\"><div><img src=\"{{recipe.picture}}\" height=\"100px\"></div></td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-description-cell\" style=\"vertical-align:top;\">\n";
 $recipesTable = $recipesTable . "                        {{recipe.name}}\n";
-$recipesTable = $recipesTable . "                        <p>{{displayedContent}}</p>\n";
+$recipesTable = $recipesTable . "                        <p ng-bind-html=\"displayedContent\"></p>\n";
 $recipesTable = $recipesTable . "                        <a href=\"\" class=\"read-more-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
 $recipesTable = $recipesTable . "                     </td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-price-cell\">{{recipe.price}} €</td>\n";

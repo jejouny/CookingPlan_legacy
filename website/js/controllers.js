@@ -1,4 +1,4 @@
-var app = angular.module("cooking_plan",[]);
+var app = angular.module("cooking_plan",['ngSanitize']);
 
 app.controller("tabCtrl",function($scope){
     $scope.tabSelected = "#ingredients";
@@ -28,20 +28,23 @@ app.controller('filterRecipeCtrl', function($scope) {
 // To expand recipe descriptions
 app.controller('readMoreCtrl', function($scope) {
 
+   // Truncate test according to line number and length
    function truncateText(text, maxLineNumber, maxLineLength) {
       var lines = text.match(/[^\r\n]+/g);
       var isTrunc = false;
       var truncText = '';
+      var lineCount = 0;
 
       // First split lines
       if (lines.length > maxLineNumber) {
-         // Show the button
+         // Need to truncate
          isTrunc = true;
          for (var iLine = 0; iLine < lines.length; iLine++) {
             if (iLine >= maxLineNumber) {
                 break;
             }
             truncText = truncText + lines[iLine];
+            lineCount++;
 
             if (iLine != maxLineNumber -1 ) {
                truncText = truncText + "\r\n";
@@ -50,6 +53,7 @@ app.controller('readMoreCtrl', function($scope) {
       }
       else {
          truncText = text;
+         lineCount = lines.length;
       }
 
       // Then truncate lines
@@ -58,12 +62,69 @@ app.controller('readMoreCtrl', function($scope) {
          truncText = truncText.substr(0, maxLineLength);
       }
 
-      if (isTrunc) {
-         truncText = truncText + " ...";
-      }
-
-      var result = {isTruncated:isTrunc, truncatedText:truncText}; 
+      var result = {isTruncated:isTrunc, truncatedText:truncText, lineNumber:lineCount}; 
       return result;
+   }
+
+   // To reduce or expand the text depending on the button state
+   function expandOrReduce()
+   {
+      var maxLineNumber = 3;
+      var maxLineLength = 70;
+
+      var ingredientsArray = $scope.recipe.ingredients;
+      if ($scope.moreChecked) {
+         $scope.buttonLabel ='Réduire';
+         $scope.displayedContent = $scope.recipe.description;
+
+         if (ingredientsArray.length > 0) {
+            $scope.displayedContent = $scope.displayedContent + "<ul>";
+         }
+
+         for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
+            $scope.displayedContent = $scope.displayedContent + "<li>" + ingredientsArray[iIngredient]["name"] + "</li>";
+         }
+
+         if (ingredientsArray.length > 0) {
+            $scope.displayedContent = $scope.displayedContent + "</ul>";
+         }
+
+      } else {
+         $scope.buttonLabel ='Détail';
+         var descriptionText = $scope.recipe.description;
+         var truncated = truncateText(descriptionText, maxLineNumber, maxLineLength);
+         $scope.displayedContent = truncated["truncatedText"];
+         maxLineNumber = maxLineNumber - truncated["lineNumber"];
+
+         // The description is truncated => nothing to display more
+         var isTruncated = truncated["isTruncated"] || (maxLineNumber == 0 && ingredientsArray.length != 0);
+         if (isTruncated) {
+            $scope.showButton = true;
+            $scope.displayedContent = $scope.displayedContent + " ...";
+         }
+         // The description is not truncated => process ingredients
+         else {
+            for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
+               // Ingredient is truncated => nothing to display more
+               var truncated2 = truncateText(ingredientsArray[iIngredient]["name"], maxLineNumber, maxLineLength);
+               maxLineNumber = maxLineNumber - truncated2["lineNumber"];
+               var isTruncated = truncated2["isTruncated"]  || maxLineNumber == 0 ;
+
+               if (iIngredient == 0) {
+                  $scope.displayedContent = $scope.displayedContent + "<ul>";
+               }
+
+               $scope.displayedContent = $scope.displayedContent + "<li>" + truncated2["truncatedText"] + "</li>";
+
+               if (isTruncated) {
+                  $scope.showButton = true;
+                  $scope.displayedContent = $scope.displayedContent + " ...";
+                  $scope.displayedContent = $scope.displayedContent + "</ul>";
+                  break;
+               }
+            }
+         }
+      }
    }
 
    // Initialization
@@ -71,37 +132,13 @@ app.controller('readMoreCtrl', function($scope) {
    $scope.moreChecked = false;
    $scope.showButton = false;
    $scope.displayedContent = '';
+   expandOrReduce();
+   //$scope.displayedContent = $sce.trustAsHtml($scope.displayedContent);
+   //$scope.displayedContent = $sce.trustAsHtml("<p id=toto>");
 
-   // Recipe description + ingredients
-   var fullText = $scope.recipe.description;
-   var ingredientsArray = $scope.recipe.ingredients;
-   for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
-      fullText = fullText + "\r\n" + "- " + ingredientsArray[iIngredient]["name"];
-   }
-
-   var maxLineNumber = 1;
-   var maxLineLength = 70;
-   var truncatedText = truncateText(fullText, maxLineNumber, maxLineLength);
-   $scope.displayedContent = truncatedText["truncatedText"];
-   $scope.showButton = truncatedText["isTruncated"];
-
+   // Button callback
    $scope.readMore = function() {
       $scope.moreChecked = !$scope.moreChecked;
-
-      // Recipe description + ingredients
-      var fullText = $scope.recipe.description;
-      var ingredientsArray = $scope.recipe.ingredients;
-      for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
-         fullText = fullText + "\r\n" + "- " + ingredientsArray[iIngredient]["name"];
-      }
-
-      if ($scope.moreChecked) {
-         $scope.buttonLabel ='Réduire';
-         $scope.displayedContent = fullText;
-      } else {
-         $scope.buttonLabel ='Détail';
-         var truncatedText = truncateText(fullText, maxLineNumber, maxLineLength);
-         $scope.displayedContent = truncatedText["truncatedText"];
-      }
+      expandOrReduce();
    }
 });

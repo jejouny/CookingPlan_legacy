@@ -192,6 +192,10 @@ font-size:16px;
 white-space:pre;
 }
 
+.search-result-description-cell > ul{
+padding-left:100px;
+}
+
 .search-result-description-cell > a{
 font-size:12px;
 padding:5px 10px;

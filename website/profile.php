@@ -7,6 +7,7 @@ include('recipes.php');
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <html>
    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.js"></script>
    <script type="text/javascript" src="js/controllers.js"></script>
 
    <head>
