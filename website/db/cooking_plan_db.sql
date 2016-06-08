@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 06, 2016 at 10:11 AM
+-- Generation Time: Jun 08, 2016 at 12:12 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
   `price` decimal(6,0) NOT NULL,
   `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `ingredients`
@@ -63,7 +63,19 @@ INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`, `account_id`) VALUE
 (1, 'AAAAAAAAA', '1.jpeg', 0, 2),
 (2, 'BBBBBBBBB', '2.jpeg', 0, 2),
 (3, 'CCCCCCCC', '3.jpg', 1, 2),
-(4, 'DDDDDDDD', '4.jpeg', 1, 2);
+(4, 'DDDDDDDDDD', NULL, 0, 2);
+
+--
+-- Triggers `ingredients`
+--
+DROP TRIGGER IF EXISTS `onIngredientRemoved`;
+DELIMITER //
+CREATE TRIGGER `onIngredientRemoved` AFTER DELETE ON `ingredients`
+ FOR EACH ROW BEGIN
+UPDATE recipes_ingredients SET ingredient_id=-1 WHERE ingredient_id = OLD.id;
+END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -87,10 +99,21 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `account_id`) VALUES
-(1, 'Recette AAAAAA', 'Description de la recette AAAAA', '1.jpeg', 2, 2),
 (2, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 2),
 (3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 2),
 (4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2);
+
+--
+-- Triggers `recipes`
+--
+DROP TRIGGER IF EXISTS `onRecipeRemoved`;
+DELIMITER //
+CREATE TRIGGER `onRecipeRemoved` AFTER DELETE ON `recipes`
+ FOR EACH ROW BEGIN
+DELETE FROM recipes_ingredients WHERE recipe_id = OLD.id;
+END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -103,6 +126,16 @@ CREATE TABLE IF NOT EXISTS `recipes_ingredients` (
   `ingredient_id` int(10) NOT NULL,
   `ingredient_amount` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `recipes_ingredients`
+--
+
+INSERT INTO `recipes_ingredients` (`recipe_id`, `ingredient_id`, `ingredient_amount`) VALUES
+(1, -1, 0),
+(2, -1, 0),
+(2, 3, 0),
+(2, 4, 0);
 
 -- --------------------------------------------------------
 

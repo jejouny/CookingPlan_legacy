@@ -26,11 +26,27 @@ while ($row = mysql_fetch_assoc($query_result)) {
       $recipePicture = "res/no_picture.png";
    }
 
-   //$recipeDescription = nl2br($row['description'], false);
    $recipeDescription = $row['description'];
 
-   //$recipeType = $row['price'];
-   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription . "'}";
+   // Get the recipe ingredients
+   $ingredients_query_result = mysql_query("SELECT IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '??',  ingredient_amount) AS amount, IF(ingredient_id=-1, '??',  price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId, $connection);
+   if (!$ingredients_query_result) {
+      echo mysql_error();
+   }
+
+   $ingredientsNgArray = "[";
+   $commaIngredient = "";
+   while ($ingredientRow = mysql_fetch_assoc($ingredients_query_result)) {
+      $ingredientName = $ingredientRow['name'];
+      $ingredientAmount = $ingredientRow['amount'];
+      $ingredientPrice = $ingredientRow['price'];
+      $ingredientsNgArray = $ingredientsNgArray . $commaIngredient  . "{name:'" . $ingredientRow['name'] . "', amount:'" . $ingredientRow['amount']. "', price:'" . $ingredientRow['price'] . "'}";
+      $commaIngredient = ", ";
+   }
+   $ingredientsNgArray = $ingredientsNgArray . "]";
+
+   $recipeIngredients = $row['price'];
+   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription  . "', ingredients:" . $ingredientsNgArray . "}";
    $comma = ", ";
 }
 
