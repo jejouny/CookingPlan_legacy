@@ -29,7 +29,7 @@ while ($row = mysql_fetch_assoc($query_result)) {
    $recipeDescription = $row['description'];
 
    // Get the recipe ingredients and their amount
-   $ingredients_query_result = mysql_query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '?',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, '?', price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id", $connection);
+   $ingredients_query_result = mysql_query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '0.000',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, 0.00, price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id", $connection);
 
    if (!$ingredients_query_result) {
       echo mysql_error();
@@ -37,17 +37,20 @@ while ($row = mysql_fetch_assoc($query_result)) {
 
    $ingredientsNgArray = "[";
    $commaIngredient = "";
+   $recipePrice = 0.00;
    while ($ingredientRow = mysql_fetch_assoc($ingredients_query_result)) {
       $ingredientName = $ingredientRow['name'];
       $ingredientAmount = $ingredientRow['amount'];
       $ingredientPrice = $ingredientRow['price'];
-      $ingredientsNgArray = $ingredientsNgArray . $commaIngredient  . "{name:'" . $ingredientRow['name'] . "', amount:'" . $ingredientRow['amount']  . "', unit:'" . $ingredientRow['unit']. "', price:'" . $ingredientRow['price'] . "'}";
+
+      $recipePrice = $recipePrice + $ingredientPrice * $ingredientAmount;
+      $ingredientsNgArray = $ingredientsNgArray . $commaIngredient  . "{name:'" . $ingredientRow['name'] . "', amount:'" . $ingredientRow['amount']  . "', unit:'" . $ingredientRow['unit'] . "'}";
       $commaIngredient = ", ";
    }
    $ingredientsNgArray = $ingredientsNgArray . "]";
 
    $recipeIngredients = $row['price'];
-   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription  . "', ingredients:" . $ingredientsNgArray . "}";
+   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription  . "', ingredients:" . $ingredientsNgArray . ", price:'" . $recipePrice . "'}";
    $comma = ", ";
 }
 

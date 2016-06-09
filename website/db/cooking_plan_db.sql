@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 08, 2016 at 12:12 PM
+-- Generation Time: Jun 09, 2016 at 05:47 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
-  `price` decimal(6,0) NOT NULL,
+  `price` float(3,2) NOT NULL,
   `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
@@ -60,10 +60,9 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
 --
 
 INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`, `account_id`) VALUES
-(1, 'AAAAAAAAA', '1.jpeg', 0, 2),
-(2, 'BBBBBBBBB', '2.jpeg', 0, 2),
-(3, 'CCCCCCCC', '3.jpg', 1, 2),
-(4, 'DDDDDDDDDD', NULL, 0, 2);
+(1, 'AAAAAAAAA', '1.jpeg', 1.25, 2),
+(2, 'BBBBBBBBB', '2.jpeg', 0.00, 2),
+(3, 'CCCCCCCC\r\nddddd\r\nadadaddddddddddddddddddddddddddddddddddddd', '3.jpg', 1.00, 2);
 
 --
 -- Triggers `ingredients`
@@ -72,7 +71,7 @@ DROP TRIGGER IF EXISTS `onIngredientRemoved`;
 DELIMITER //
 CREATE TRIGGER `onIngredientRemoved` AFTER DELETE ON `ingredients`
  FOR EACH ROW BEGIN
-UPDATE recipes_ingredients SET ingredient_id=-1 WHERE ingredient_id = OLD.id;
+UPDATE recipes_ingredients SET ingredient_id=-1, ingredient_amount=0, ingredient_unit_id=-1 WHERE ingredient_id = OLD.id;
 END
 //
 DELIMITER ;
@@ -99,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `account_id`) VALUES
-(2, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 2),
+(1, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 2),
 (3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 2),
 (4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2);
 
@@ -124,18 +123,21 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `recipes_ingredients` (
   `recipe_id` int(10) NOT NULL,
   `ingredient_id` int(10) NOT NULL,
-  `ingredient_amount` decimal(10,0) NOT NULL
+  `ingredient_amount` float(4,3) NOT NULL,
+  `ingredient_unit_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `recipes_ingredients`
 --
 
-INSERT INTO `recipes_ingredients` (`recipe_id`, `ingredient_id`, `ingredient_amount`) VALUES
-(1, -1, 0),
-(2, -1, 0),
-(2, 3, 0),
-(2, 4, 0);
+INSERT INTO `recipes_ingredients` (`recipe_id`, `ingredient_id`, `ingredient_amount`, `ingredient_unit_id`) VALUES
+(1, -1, 0.000, -1),
+(2, -1, 0.000, -1),
+(2, -1, 0.000, -1),
+(2, -1, 0.000, -1),
+(4, -1, 9.999, -1),
+(1, 1, 1.000, 1);
 
 -- --------------------------------------------------------
 
@@ -157,6 +159,30 @@ INSERT INTO `recipe_types` (`type_id`, `type_name`) VALUES
 (1, 'Entrée'),
 (2, 'Plat principal'),
 (3, 'Dessert');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `units`
+--
+
+CREATE TABLE IF NOT EXISTS `units` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mnemonic` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `mnemonic`) VALUES
+(1, 'g'),
+(2, 'kg'),
+(3, 'l'),
+(4, 'cl'),
+(5, 'c. café'),
+(6, 'c. soupe');
 
 -- --------------------------------------------------------
 
