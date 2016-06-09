@@ -69,7 +69,7 @@ app.controller('readMoreCtrl',   ['$scope', '$sce', function($scope, $sce) {
    // To reduce or expand the text depending on the button state
    function expandOrReduce()
    {
-      var maxLineNumber = 3;
+      var maxLineNumber = 1;
       var maxLineLength = 70;
 
       var ingredientsArray = $scope.recipe.ingredients;
@@ -82,7 +82,7 @@ app.controller('readMoreCtrl',   ['$scope', '$sce', function($scope, $sce) {
          }
 
          for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
-            $scope.displayedContent = $scope.displayedContent + "<li>" + ingredientsArray[iIngredient]["name"] + "</li>";
+            $scope.displayedContent = $scope.displayedContent + "<li>" + ingredientsArray[iIngredient]["name"] + " <b>(" +  ingredientsArray[iIngredient]["amount"] + ingredientsArray[iIngredient]["unit"] + ")</b>" + "</li>";
          }
 
          if (ingredientsArray.length > 0) {
@@ -106,7 +106,7 @@ app.controller('readMoreCtrl',   ['$scope', '$sce', function($scope, $sce) {
          else {
             for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
                // Ingredient is truncated => nothing to display more
-               var truncated2 = truncateText(ingredientsArray[iIngredient]["name"], maxLineNumber, maxLineLength);
+               var truncated2 = truncateText(ingredientsArray[iIngredient]["name"] + " <b>(" + ingredientsArray[iIngredient]["amount"]  + ingredientsArray[iIngredient]["unit"] + ")</b>", maxLineNumber, maxLineLength);
                maxLineNumber = maxLineNumber - truncated2["lineNumber"];
                var isTruncated = truncated2["isTruncated"]  || maxLineNumber == 0 ;
 

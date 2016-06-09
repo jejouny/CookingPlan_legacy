@@ -28,8 +28,9 @@ while ($row = mysql_fetch_assoc($query_result)) {
 
    $recipeDescription = $row['description'];
 
-   // Get the recipe ingredients
-   $ingredients_query_result = mysql_query("SELECT IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '??',  ingredient_amount) AS amount, IF(ingredient_id=-1, '??',  price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId, $connection);
+   // Get the recipe ingredients and their amount
+   $ingredients_query_result = mysql_query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '?',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, '?', price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id", $connection);
+
    if (!$ingredients_query_result) {
       echo mysql_error();
    }
@@ -40,7 +41,7 @@ while ($row = mysql_fetch_assoc($query_result)) {
       $ingredientName = $ingredientRow['name'];
       $ingredientAmount = $ingredientRow['amount'];
       $ingredientPrice = $ingredientRow['price'];
-      $ingredientsNgArray = $ingredientsNgArray . $commaIngredient  . "{name:'" . $ingredientRow['name'] . "', amount:'" . $ingredientRow['amount']. "', price:'" . $ingredientRow['price'] . "'}";
+      $ingredientsNgArray = $ingredientsNgArray . $commaIngredient  . "{name:'" . $ingredientRow['name'] . "', amount:'" . $ingredientRow['amount']  . "', unit:'" . $ingredientRow['unit']. "', price:'" . $ingredientRow['price'] . "'}";
       $commaIngredient = ", ";
    }
    $ingredientsNgArray = $ingredientsNgArray . "]";
@@ -70,8 +71,8 @@ $recipesTable = $recipesTable . "               <table class=\"search-result-cel
 $recipesTable = $recipesTable . "                  <tr>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-icon-cell\"><div><img src=\"{{recipe.picture}}\" height=\"100px\"></div></td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-description-cell\" style=\"vertical-align:top;\">\n";
-$recipesTable = $recipesTable . "                        {{recipe.name}}\n";
-$recipesTable = $recipesTable . "                        <p ng-bind-html=\"displayedContent\"></p>\n";
+$recipesTable = $recipesTable . "                        <p class=\"search-result-content\" ng-bind-html=\"recipe.name\"></p>\n";
+$recipesTable = $recipesTable . "                        <p class=\"search-result-sub-content\" ng-bind-html=\"displayedContent\"></p>\n";
 $recipesTable = $recipesTable . "                        <a href=\"\" class=\"read-more-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
 $recipesTable = $recipesTable . "                     </td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-price-cell\">{{recipe.price}} €</td>\n";

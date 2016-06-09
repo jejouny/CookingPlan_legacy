@@ -50,7 +50,9 @@ $ingredientsTable = $ingredientsTable . "            <td class=\"search-result-c
 $ingredientsTable = $ingredientsTable . "               <table class=\"search-result-cell-content\">\n";
 $ingredientsTable = $ingredientsTable . "                  <tr>\n";
 $ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-icon-cell\"><div><img src=\"{{ingredient.picture}}\" height=\"100px\"></div></td>\n";
-$ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-description-cell\">{{ingredient.name}}</td>\n";
+$ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-description-cell\">\n";
+$ingredientsTable = $ingredientsTable . "                        <p class=\"search-result-content\" ng-bind-html=\"ingredient.name\"></p>\n";
+$ingredientsTable = $ingredientsTable . "                     </td>\n";
 $ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-price-cell\">{{ingredient.price}} €</td>\n";
 $ingredientsTable = $ingredientsTable . "                  </tr>\n";
 $ingredientsTable = $ingredientsTable . "               </table>\n";

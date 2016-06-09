@@ -186,14 +186,23 @@ padding-left: 10px;
 padding-right: 10px;
 line-height:100%;
 }
-.search-result-description-cell > p{
+
+.search-result-content {
+font-family:raleway;
+font-size:20px;
+white-space:pre;
+margin:10px 0px 0px 0px;
+}
+.search-result-sub-content {
 font-family:raleway;
 font-size:16px;
 white-space:pre;
+margin:10px 0px 10px 0px;
 }
 
 .search-result-list{
 padding-left:14px;
+margin:10px 0px 10px 0px;
 }
 
 .search-result-description-cell > a{
