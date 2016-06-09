@@ -26,7 +26,7 @@ app.controller('filterRecipeCtrl', function($scope) {
 });
 
 // To expand recipe descriptions
-app.controller('readMoreCtrl', function($scope) {
+app.controller('readMoreCtrl',   ['$scope', '$sce', function($scope, $sce) {
 
    // Truncate test according to line number and length
    function truncateText(text, maxLineNumber, maxLineLength) {
@@ -78,7 +78,7 @@ app.controller('readMoreCtrl', function($scope) {
          $scope.displayedContent = $scope.recipe.description;
 
          if (ingredientsArray.length > 0) {
-            $scope.displayedContent = $scope.displayedContent + "<ul>";
+            $scope.displayedContent = $scope.displayedContent + "<ul class=\"search-result-list\">";
          }
 
          for (var iIngredient = 0; iIngredient < ingredientsArray.length; iIngredient++) {
@@ -111,7 +111,7 @@ app.controller('readMoreCtrl', function($scope) {
                var isTruncated = truncated2["isTruncated"]  || maxLineNumber == 0 ;
 
                if (iIngredient == 0) {
-                  $scope.displayedContent = $scope.displayedContent + "<ul>";
+                  $scope.displayedContent = $scope.displayedContent + "<ul class=\"search-result-list\">";
                }
 
                $scope.displayedContent = $scope.displayedContent + "<li>" + truncated2["truncatedText"] + "</li>";
@@ -133,12 +133,11 @@ app.controller('readMoreCtrl', function($scope) {
    $scope.showButton = false;
    $scope.displayedContent = '';
    expandOrReduce();
-   //$scope.displayedContent = $sce.trustAsHtml($scope.displayedContent);
-   //$scope.displayedContent = $sce.trustAsHtml("<p id=toto>");
+   $scope.displayedContent = $sce.trustAsHtml($scope.displayedContent);
 
    // Button callback
    $scope.readMore = function() {
       $scope.moreChecked = !$scope.moreChecked;
       expandOrReduce();
    }
-});
+}]);

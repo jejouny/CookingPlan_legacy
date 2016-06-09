@@ -192,8 +192,8 @@ font-size:16px;
 white-space:pre;
 }
 
-.search-result-description-cell > ul{
-padding-left:100px;
+.search-result-list{
+padding-left:14px;
 }
 
 .search-result-description-cell > a{
