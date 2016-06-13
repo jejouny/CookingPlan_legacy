@@ -2,7 +2,8 @@
 
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("select id, name, picture, description from recipes where account_id='$account'", $connection);
+mysql_query ("SET lc_time_names = 'fr_FR';");
+$query_result = mysql_query("SELECT recipes.id AS id, recipes.name AS name, recipes.picture AS picture, recipes.description AS description, recipe_types.name AS type, time_slots.name AS time_slot, MONTHNAME(STR_TO_DATE(recipes.month_start, '%m')) AS month_start, MONTHNAME(STR_TO_DATE(recipes.month_end, '%m')) AS month_end FROM recipes LEFT JOIN recipe_types ON recipe_types.id=type_id LEFT JOIN time_slots ON time_slots.id=time_slot_id where account_id='$account'", $connection);
 if (!$query_result) {
    echo mysql_error();
 }
@@ -27,6 +28,10 @@ while ($row = mysql_fetch_assoc($query_result)) {
    }
 
    $recipeDescription = $row['description'];
+   $recipeType = $row['type'];
+   $recipeTimeSlot = $row['time_slot'];
+   $recipeMonthStart = $row['month_start'];
+   $recipeMonthEnd = $row['month_end'];
 
    // Get the recipe ingredients and their amount
    $ingredients_query_result = mysql_query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '0.000',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, 0.00, price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id", $connection);
@@ -50,7 +55,7 @@ while ($row = mysql_fetch_assoc($query_result)) {
    $ingredientsNgArray = $ingredientsNgArray . "]";
 
    $recipeIngredients = $row['price'];
-   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription  . "', ingredients:" . $ingredientsNgArray . ", price:'" . $recipePrice . "'}";
+   $recipesNgArray = $recipesNgArray . $comma  . "{id:'" . $recipeId . "', name:'" . $recipeName . "', picture:'" . $recipePicture . "', description:'" . $recipeDescription  . "', ingredients:" . $ingredientsNgArray . ", price:'" . $recipePrice . "', type:'". $recipeType . "', time_slot:'" . $recipeTimeSlot . "', month_start:'" . $recipeMonthStart . "', month_end:'" . $recipeMonthEnd ."'}";
    $comma = ", ";
 }
 
@@ -78,7 +83,10 @@ $recipesTable = $recipesTable . "                        <p class=\"search-resul
 $recipesTable = $recipesTable . "                        <p class=\"search-result-sub-content\" ng-bind-html=\"displayedContent\"></p>\n";
 $recipesTable = $recipesTable . "                        <a href=\"\" class=\"read-more-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
 $recipesTable = $recipesTable . "                     </td>\n";
-$recipesTable = $recipesTable . "                     <td class=\"search-result-price-cell\">{{recipe.price}} €</td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-result-type-cell\">{{recipe.type}}</td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-result-time-slot-cell\">{{recipe.time_slot}}</td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-result-period-cell\">{{recipe.month_start}} à {{recipe.month_end}}</td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-result-price-cell\" style=\"vertical-align:top;\">{{recipe.price}} €</td>\n";
 $recipesTable = $recipesTable . "                  </tr>\n";
 $recipesTable = $recipesTable . "               </table>\n";
 $recipesTable = $recipesTable . "            </td>\n";

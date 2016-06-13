@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 09, 2016 at 05:47 PM
+-- Generation Time: Jun 13, 2016 at 11:14 AM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -88,6 +88,9 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `description` varchar(512) DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `type_id` int(10) NOT NULL,
+  `time_slot_id` int(10) NOT NULL,
+  `month_start` int(10) NOT NULL,
+  `month_end` int(10) NOT NULL,
   `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `recipe_id` (`id`)
@@ -97,10 +100,10 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `account_id`) VALUES
-(1, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 2),
-(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 2),
-(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2);
+INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `time_slot_id`, `month_start`, `month_end`, `account_id`) VALUES
+(1, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 1, 1, 3, 2),
+(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 3, 4, 6, 2),
+(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2, 8, 9, 2);
 
 --
 -- Triggers `recipes`
@@ -146,19 +149,41 @@ INSERT INTO `recipes_ingredients` (`recipe_id`, `ingredient_id`, `ingredient_amo
 --
 
 CREATE TABLE IF NOT EXISTS `recipe_types` (
-  `type_id` int(10) NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`type_id`)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `recipe_types`
 --
 
-INSERT INTO `recipe_types` (`type_id`, `type_name`) VALUES
+INSERT INTO `recipe_types` (`id`, `name`) VALUES
 (1, 'Entrée'),
 (2, 'Plat principal'),
 (3, 'Dessert');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_slots`
+--
+
+CREATE TABLE IF NOT EXISTS `time_slots` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `time_slots`
+--
+
+INSERT INTO `time_slots` (`id`, `name`) VALUES
+(1, 'Petit déjeuner'),
+(2, 'Déjeuner'),
+(3, 'Souper'),
+(4, 'Goûter');
 
 -- --------------------------------------------------------
 
