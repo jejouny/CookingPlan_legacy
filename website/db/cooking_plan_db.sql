@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 13, 2016 at 11:14 AM
+-- Generation Time: Jun 20, 2016 at 02:49 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
   `name` varchar(255) NOT NULL,
   `picture` varchar(255) DEFAULT NULL,
   `price` float(3,2) NOT NULL,
+  `unit_id` int(10) NOT NULL,
   `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
@@ -59,10 +60,10 @@ CREATE TABLE IF NOT EXISTS `ingredients` (
 -- Dumping data for table `ingredients`
 --
 
-INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`, `account_id`) VALUES
-(1, 'AAAAAAAAA', '1.jpeg', 1.25, 2),
-(2, 'BBBBBBBBB', '2.jpeg', 0.00, 2),
-(3, 'CCCCCCCC\r\nddddd\r\nadadaddddddddddddddddddddddddddddddddddddd', '3.jpg', 1.00, 2);
+INSERT INTO `ingredients` (`id`, `name`, `picture`, `price`, `unit_id`, `account_id`) VALUES
+(1, 'AAAAAAAAA', '1.jpeg', 1.25, 1, 2),
+(2, 'BBBBBBBBB', '2.jpeg', 0.00, 2, 2),
+(3, 'CCCCCCCC\r\nddddd\r\nadadaddddddddddddddddddddddddddddddddddddd', '3.jpg', 1.00, 4, 2);
 
 --
 -- Triggers `ingredients`
@@ -91,6 +92,8 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `time_slot_id` int(10) NOT NULL,
   `month_start` int(10) NOT NULL,
   `month_end` int(10) NOT NULL,
+  `time` int(10) NOT NULL,
+  `customer_count` int(10) NOT NULL,
   `account_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `recipe_id` (`id`)
@@ -100,10 +103,10 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `time_slot_id`, `month_start`, `month_end`, `account_id`) VALUES
-(1, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 1, 1, 3, 2),
-(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 3, 4, 6, 2),
-(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2, 8, 9, 2);
+INSERT INTO `recipes` (`id`, `name`, `description`, `picture`, `type_id`, `time_slot_id`, `month_start`, `month_end`, `time`, `customer_count`, `account_id`) VALUES
+(1, 'Recette BBBBB', 'Description de la recette BBBBB', '66.jpg', 2, 1, 1, 3, 90, 0, 2),
+(3, 'Recette CCCCC', 'Description de la recette CCCCC', NULL, 3, 3, 4, 6, 0, 0, 2),
+(4, 'Recette BBBBB', 'Description de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\nDescription de la recette BBBBB\r\n', '66.jpg', 2, 2, 8, 9, 0, 0, 2);
 
 --
 -- Triggers `recipes`
@@ -159,9 +162,9 @@ CREATE TABLE IF NOT EXISTS `recipe_types` (
 --
 
 INSERT INTO `recipe_types` (`id`, `name`) VALUES
-(1, 'Entrée'),
-(2, 'Plat principal'),
-(3, 'Dessert');
+(1, 'entrée'),
+(2, 'plat principal'),
+(3, 'dessert');
 
 -- --------------------------------------------------------
 
@@ -180,10 +183,10 @@ CREATE TABLE IF NOT EXISTS `time_slots` (
 --
 
 INSERT INTO `time_slots` (`id`, `name`) VALUES
-(1, 'Petit déjeuner'),
-(2, 'Déjeuner'),
-(3, 'Souper'),
-(4, 'Goûter');
+(1, 'petit déjeuner'),
+(2, 'déjeuner'),
+(3, 'souper'),
+(4, 'goûter');
 
 -- --------------------------------------------------------
 
@@ -195,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `units` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mnemonic` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `units`
@@ -207,7 +210,8 @@ INSERT INTO `units` (`id`, `mnemonic`) VALUES
 (3, 'l'),
 (4, 'cl'),
 (5, 'c. café'),
-(6, 'c. soupe');
+(6, 'c. soupe'),
+(7, 'unité');
 
 -- --------------------------------------------------------
 
