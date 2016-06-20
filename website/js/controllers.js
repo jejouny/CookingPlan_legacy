@@ -141,3 +141,13 @@ app.controller('readMoreCtrl',   ['$scope', '$sce', function($scope, $sce) {
       expandOrReduce();
    }
 }]);
+
+// To compute hours from minutes
+app.controller('formatTimeCtrl', function($scope) {
+
+$scope.formatMinutesToHours = function(){
+   return Math.floor($scope.recipe.time*1/60) + 'h' + $scope.recipe.time*1%60 + 'min';
+}
+
+});
+
