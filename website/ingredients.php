@@ -2,7 +2,7 @@
 
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("select name, picture, price from ingredients where account_id='$account'", $connection);
+$query_result = mysql_query("SELECT ingredients.name, ingredients.picture, ingredients.price, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'", $connection);
 if (!$query_result) {
    echo mysql_error();
 }
@@ -26,7 +26,8 @@ while ($row = mysql_fetch_assoc($query_result)) {
    }
 
    $ingredientPrice = $row['price'];
-   $ingredientsNgArray = $ingredientsNgArray . $comma  . "{name:'" . $ingredientName . "', picture:'" . $ingredientPicture . "', price:'" . $ingredientPrice . "'}";
+   $ingredientUnit = $row['unit'];
+   $ingredientsNgArray = $ingredientsNgArray . $comma  . "{name:'" . $ingredientName . "', picture:'" . $ingredientPicture . "', price:'" . $ingredientPrice . "', unit:'" . $ingredientUnit . "'}";
    $comma = ", ";
 }
 
@@ -53,7 +54,9 @@ $ingredientsTable = $ingredientsTable . "                     <td class=\"search
 $ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-description-cell\">\n";
 $ingredientsTable = $ingredientsTable . "                        <p class=\"search-result-content\" ng-bind-html=\"ingredient.name\"></p>\n";
 $ingredientsTable = $ingredientsTable . "                     </td>\n";
-$ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-price-cell\">{{ingredient.price}} €</td>\n";
+$ingredientsTable = $ingredientsTable . "                     <td class=\"search-result-price-cell\">\n";
+$ingredientsTable = $ingredientsTable . "                        <table><tr><td class=\"search-result-info-icon-cell\"><img src=\"res/price.png\" height=\"32px\"></td><td class=\"search-result-info-value-cell\">{{ingredient.price}} € par {{ingredient.unit}}</td></tr></table>\n";
+$ingredientsTable = $ingredientsTable . "                     </td>\n";
 $ingredientsTable = $ingredientsTable . "                  </tr>\n";
 $ingredientsTable = $ingredientsTable . "               </table>\n";
 $ingredientsTable = $ingredientsTable . "            </td>\n";
