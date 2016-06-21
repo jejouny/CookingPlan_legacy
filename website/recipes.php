@@ -82,7 +82,7 @@ $recipesTable = $recipesTable . "                     <td class=\"search-result-
 $recipesTable = $recipesTable . "                     <td class=\"search-result-description-cell\" style=\"vertical-align:top;\">\n";
 $recipesTable = $recipesTable . "                        <p class=\"search-result-content\" ng-bind-html=\"recipe.name\"></p>\n";
 $recipesTable = $recipesTable . "                        <p class=\"search-result-sub-content\" ng-bind-html=\"displayedContent\"></p>\n";
-$recipesTable = $recipesTable . "                        <a href=\"\" class=\"read-more-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
+$recipesTable = $recipesTable . "                        <a href=\"\" class=\"search-result-cell-button\" ng-click=\"readMore()\" ng-show=\"{{showButton}}\"/>{{buttonLabel}}</a>\n";
 $recipesTable = $recipesTable . "                     </td>\n";
 $recipesTable = $recipesTable . "                     <td class=\"search-result-info-cell\">\n";
 $recipesTable = $recipesTable . "                        <table><tr><td class=\"search-result-info-icon-cell\"><img src=\"res/time_slot.png\" height=\"32px\"></td><td class=\"search-result-info-value-cell\">{{recipe.time_slot}}</td></tr><tr><td class=\"search-result-info-icon-cell\"><img src=\"res/customer.png\" height=\"32px\"></td><td class=\"search-result-info-value-cell\">{{recipe.customer_count}} personnes</td></tr></table>\n";

@@ -1,4 +1,4 @@
-var app = angular.module("cooking_plan",['ngSanitize']);
+var app = angular.module("cooking_plan",['ngSanitize', 'ui.bootstrap']);
 
 app.controller("tabCtrl",function($scope){
     $scope.tabSelected = "#ingredients";
@@ -150,4 +150,49 @@ $scope.formatMinutesToHours = function(){
 }
 
 });
+
+// To edit/create ingredient
+app.controller('editIngredientCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log) {
+
+   // Button callback
+   $scope.editIngredient = function() {
+
+      function ModalInstanceCtrl($scope, $uibModalInstance/*, userForm*/) {
+         $scope.form = {}
+         $scope.commitIngredient = function () {
+             //if ($scope.form.userForm.$valid) {
+             //    console.log('user form is in scope');
+                 $uibModalInstance.close('closed');
+             //} else {
+             //    console.log('userform is not in scope');
+             //}
+         };
+
+         $scope.cancelIngredient = function () {
+             $uibModalInstance.dismiss('cancel');
+         };
+      }
+
+      var modalInstance = $uibModal.open({ animation: true,
+                                           templateUrl: 'ingredient_form.html', 
+                                           controller: ModalInstanceCtrl,
+                                           //scope:$scope,
+                                           //resolve: { userForm: function () { return $scope.userForm; } }
+                                         });
+
+      modalInstance.result.then( function (selectedItem) { $scope.selected = selectedItem; },
+                                 function () { $log.info('Modal dismissed at: ' + new Date()); 
+                              });
+   }
+
+
+
+
+
+   $scope.removeIngredient = function() {
+
+   console.log("Remove ingredient");
+}
+
+}]);
 
