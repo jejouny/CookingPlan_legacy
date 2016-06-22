@@ -152,47 +152,49 @@ $scope.formatMinutesToHours = function(){
 });
 
 // To edit/create ingredient
-app.controller('editIngredientCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log) {
+app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log) {
 
-   // Button callback
-   $scope.editIngredient = function() {
-
-      function ModalInstanceCtrl($scope, $uibModalInstance/*, userForm*/) {
+   // Function to create a modal dialog
+   function openModalDialog(template, acceptCallback, rejectCallback)
+   {
+      function ModalInstanceCtrl($scope, $uibModalInstance) {
          $scope.form = {}
-         $scope.commitIngredient = function () {
-             //if ($scope.form.userForm.$valid) {
-             //    console.log('user form is in scope');
-                 $uibModalInstance.close('closed');
-             //} else {
-             //    console.log('userform is not in scope');
-             //}
-         };
-
-         $scope.cancelIngredient = function () {
-             $uibModalInstance.dismiss('cancel');
-         };
+         $scope.accept = function() {
+                                       if (acceptCallback) {
+                                          acceptCallback();
+                                       }
+                                       $uibModalInstance.close('closed');
+                                    }
+         $scope.reject = function() {
+                                       if (rejectCallback) {
+                                          rejectCallback();
+                                       }
+                                       $uibModalInstance.dismiss('cancel');
+                                    }
       }
 
+
       var modalInstance = $uibModal.open({ animation: true,
-                                           templateUrl: 'ingredient_form.html', 
+                                           templateUrl: template,
                                            controller: ModalInstanceCtrl,
-                                           //scope:$scope,
-                                           //resolve: { userForm: function () { return $scope.userForm; } }
+                                           scope:$scope,
                                          });
 
-      modalInstance.result.then( function (selectedItem) { $scope.selected = selectedItem; },
-                                 function () { $log.info('Modal dismissed at: ' + new Date()); 
-                              });
+    //  modalInstance.result.then( function (selectedItem) { $scope.selected = selectedItem; },
+    //                             function () { $log.info('Modal dismissed at: ' + new Date()); 
+    //                          });
+   };
+
+   // Edit button callback
+   $scope.editIngredient = function() {
+      openModalDialog('ingredient_form.html', null, null);
    }
 
 
-
-
-
+   // Remove ingredient callback
    $scope.removeIngredient = function() {
-
-   console.log("Remove ingredient");
-}
+      openModalDialog('ingredient_form.html', null, null);
+   }
 
 }]);
 

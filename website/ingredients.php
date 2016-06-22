@@ -59,7 +59,7 @@ $ingredientsTable = $ingredientsTable . "                        <table><tr><td 
 $ingredientsTable = $ingredientsTable . "                     </td>\n";
 $ingredientsTable = $ingredientsTable . "                  </tr>\n";
 $ingredientsTable = $ingredientsTable . "                     <td style=\"padding-left:4px;vertical-align:bottom;\">\n";
-$ingredientsTable = $ingredientsTable . "                        <table ng-controller=\"editIngredientCtrl\">\n";
+$ingredientsTable = $ingredientsTable . "                        <table ng-controller=\"modalDialogsCtrl\">\n";
 $ingredientsTable = $ingredientsTable . "                           <tr>\n";
 $ingredientsTable = $ingredientsTable . "                              <td>\n";
 $ingredientsTable = $ingredientsTable . "                                 <a href=\"\" class=\"search-result-cell-button\" style=\"font-size:12px;padding:5px 10px;\" ng-click=\"editIngredient()\"/>Editer</a>\n";

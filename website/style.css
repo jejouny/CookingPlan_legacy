@@ -321,7 +321,7 @@ padding:20px;
 
 .modal-footer{
 padding:19px 20px 20px;
-margin-top:15px;
+margin-top:0px;
 text-align:right;
 border-top:1px solid #e5e5e5;
 }
@@ -367,3 +367,54 @@ box-shadow:0 5px 15px rgba(0,0,0,0.5)
 }
 }
 
+/*** For formulars****/
+
+.formular-main-layout{
+font-family:raleway;
+border:0px;
+padding:0px 0px 0px 0px;
+width: 100%;
+height:100%;
+font-size:16px;
+}
+
+.formular-icon-cell{
+width:100px;
+text-align:left;
+vertical-align:top;
+}
+
+.formular-icon-cell > div{
+width:100px;
+height:100px;
+overflow:hidden;
+}
+
+.formular-label-cell{
+text-align:left;
+padding-left: 20px;
+padding-right: 0px;
+line-height:100%;
+vertical-align:middle;
+}
+
+.formular-label-content {
+font-family:raleway;
+font-size:16px;
+margin:0px 0px 0px 0px;
+}
+
+.formular-input-cell{
+text-align:left;
+padding-left: 0px;
+padding-right: 0px;
+line-height:100%;
+vertical-align:middle;
+}
+
+.formular-input-content {
+font-family:raleway;
+font-size:16px;
+margin:0px 0px 8px 0px;
+width:96%;
+}
