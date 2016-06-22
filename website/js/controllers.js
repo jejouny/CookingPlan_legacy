@@ -187,7 +187,7 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', function($sco
 
    // Edit button callback
    $scope.editIngredient = function() {
-      openModalDialog('ingredient_form.html', null, null);
+      openModalDialog('ingredient_form.php', null, null);
    }
 
 

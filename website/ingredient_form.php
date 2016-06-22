@@ -1,3 +1,20 @@
+<?php
+include('session.php');
+
+// To populate the unit combobox
+$unitList = "";
+mysql_query ("set character_set_results='utf8'");
+$query_result = mysql_query("SELECT id, mnemonic AS unit FROM units", $connection);
+if (!$query_result) {
+   echo mysql_error();
+}
+else {
+   while ($row = mysql_fetch_assoc($query_result)) {
+      $unitList = $unitList . "<option value=\"" . $row['id'] . "\">" . $row['unit'] . "</option>\n";
+   }
+}
+?>
+
 <div class="modal-header">
     <p class="search-result-content">Modification de {{ingredient.name}}</p>
 </div>
@@ -9,7 +26,7 @@
             <p class="formular-label-content">Description :</p>
          </td>
          <td class="formular-input-cell">
-            <textarea class="formular-input-content" rows="2" cols="20">{{ingredient.name}}</textarea>
+            <textarea class="formular-input-content" style="resize:vertical;" rows="2" cols="20">{{ingredient.name}}</textarea>
          </td>
       </tr>
       <tr>
@@ -35,8 +52,7 @@
          </td>
          <td class="formular-input-cell">
             <select class="formular-input-content" style="width:99%;margin-bottom:0px;">
-               <option value="aaa">AAA</option>
-               <option value="bbb">BBB</option>
+               <?php echo $unitList; ?>
             </select>
          </td>
       </tr>

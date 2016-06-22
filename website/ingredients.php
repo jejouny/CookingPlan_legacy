@@ -1,5 +1,4 @@
 <?php
-
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
 $query_result = mysql_query("SELECT ingredients.name, ingredients.picture, ingredients.price, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'", $connection);
