@@ -151,8 +151,29 @@ $scope.formatMinutesToHours = function(){
 
 });
 
-// To edit/create ingredient
-app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log) {
+// To populate comboboxes
+app.controller('comboboxCtrl', ['$scope', '$sce', function($scope, $sce) {
+
+   // To populate the units combobox
+   $scope.populateUnitCombobox = function(){
+
+      var comboboxContent = '';
+      for (var iUnit = 0; iUnit < $scope.units.length; iUnit++) {
+         var unit = $scope.units[iUnit];
+         comboboxContent = comboboxContent + '<option value="' + unit.id + '"';
+         if (unit.id == $scope.ingredient.unitId) {
+            comboboxContent = comboboxContent + ' selected="selected"';
+         }
+         comboboxContent = comboboxContent + '>' + unit.name + '</option>\n';
+      }
+
+      return $sce.trustAsHtml(comboboxContent);
+   }
+
+}]);
+
+// To edit/create modal dialogs
+app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', function($scope, $uibModal, $log, $http) {
 
    // Function to create a modal dialog
    function openModalDialog(template, acceptCallback, rejectCallback)
@@ -187,7 +208,25 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', function($sco
 
    // Edit button callback
    $scope.editIngredient = function() {
-      openModalDialog('ingredient_form.php', null, null);
+
+      // Callback for the dialog
+      function commitIngredient() {
+         // Call the PHP function
+         var request = $http({
+                              method: "post",
+                              url: window.location.href + "commit_ingredient.php",
+                              data: {
+                                     id: $scope.ingredient.id,
+                                     name: $scope.newName,
+                                     picture: $scope.newPicture,
+                                     price: $scope.newPrice,
+                                     unitId: $scope.newUnitId
+                              },
+                              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                           });
+      }
+
+      openModalDialog('ingredient_form.php', commitIngredient, null);
    }
 
 

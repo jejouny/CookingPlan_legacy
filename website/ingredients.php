@@ -1,7 +1,7 @@
 <?php
 // To init the angular structure from the sql request
 mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("SELECT ingredients.name, ingredients.picture, ingredients.price, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'", $connection);
+$query_result = mysql_query("SELECT ingredients.id, ingredients.name, ingredients.picture, ingredients.price, units.id AS unit_id, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'", $connection);
 if (!$query_result) {
    echo mysql_error();
 }
@@ -9,6 +9,7 @@ if (!$query_result) {
 $ingredientsNgArray = "ingredients=[";
 $comma = "";
 while ($row = mysql_fetch_assoc($query_result)) {
+   $ingredientId = $row['id'];
    $ingredientName = $row['name'];
    $ingredientPicture = $row['picture'];
    // Missing picture
@@ -26,7 +27,8 @@ while ($row = mysql_fetch_assoc($query_result)) {
 
    $ingredientPrice = $row['price'];
    $ingredientUnit = $row['unit'];
-   $ingredientsNgArray = $ingredientsNgArray . $comma  . "{name:'" . $ingredientName . "', picture:'" . $ingredientPicture . "', price:'" . $ingredientPrice . "', unit:'" . $ingredientUnit . "'}";
+   $ingredientUnitId = $row['unit_id'];
+   $ingredientsNgArray = $ingredientsNgArray . $comma  . "{id:'" . $ingredientId . "', name:'" . $ingredientName . "', picture:'" . $ingredientPicture . "', price:'" . $ingredientPrice .  "', unitId:'" . $ingredientUnitId . "', unit:'" . $ingredientUnit . "'}";
    $comma = ", ";
 }
 
