@@ -200,21 +200,18 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', func
                                            controller: ModalInstanceCtrl,
                                            scope:$scope,
                                          });
-
-    //  modalInstance.result.then( function (selectedItem) { $scope.selected = selectedItem; },
-    //                             function () { $log.info('Modal dismissed at: ' + new Date()); 
-    //                          });
    };
 
    // Edit button callback
    $scope.editIngredient = function() {
+
 
       // Callback for the dialog
       function commitIngredient() {
          // Call the PHP function
          var request = $http({
                               method: "post",
-                              url: window.location.href + "commit_ingredient.php",
+                              url: "commit_ingredient.php",
                               data: {
                                      id: $scope.ingredient.id,
                                      name: $scope.newName,
