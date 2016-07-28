@@ -1,16 +1,16 @@
 <?php
 
 // To init the angular structure from the sql request
-mysql_query ("set character_set_results='utf8'");
-mysql_query ("SET lc_time_names = 'fr_FR';");
-$query_result = mysql_query("SELECT recipes.id AS id, recipes.name AS name, recipes.picture AS picture, recipes.description AS description, recipe_types.name AS type, time_slots.name AS time_slot, MONTHNAME(STR_TO_DATE(recipes.month_start, '%m')) AS month_start, MONTHNAME(STR_TO_DATE(recipes.month_end, '%m')) AS month_end, recipes.customer_count AS customer_count, recipes.time AS time FROM recipes LEFT JOIN recipe_types ON recipe_types.id=type_id LEFT JOIN time_slots ON time_slots.id=time_slot_id where account_id='$account'", $connection);
-if (!$query_result) {
-   echo mysql_error();
+$connection->query("set character_set_results='utf8'");
+$connection->query("SET lc_time_names = 'fr_FR';");
+$query = $connection->query("SELECT recipes.id AS id, recipes.name AS name, recipes.picture AS picture, recipes.description AS description, recipe_types.name AS type, time_slots.name AS time_slot, MONTHNAME(STR_TO_DATE(recipes.month_start, '%m')) AS month_start, MONTHNAME(STR_TO_DATE(recipes.month_end, '%m')) AS month_end, recipes.customer_count AS customer_count, recipes.time AS time FROM recipes LEFT JOIN recipe_types ON recipe_types.id=type_id LEFT JOIN time_slots ON time_slots.id=time_slot_id where account_id='$account'");
+if (!$query) {
+   echo $query->error;
 }
 
 $recipesNgArray = "recipes=[";
 $comma = "";
-while ($row = mysql_fetch_assoc($query_result)) {
+foreach($query as $row) {
    $recipeId = $row['id'];
    $recipeName = $row['name'];
    $recipePicture = $row['picture'];
@@ -36,16 +36,16 @@ while ($row = mysql_fetch_assoc($query_result)) {
    $recipeTime = $row['time'];
 
    // Get the recipe ingredients and their amount
-   $ingredients_query_result = mysql_query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '0.000',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, 0.00, price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id", $connection);
+   $ingredients_query = $connection->query("SELECT name, amount, IF(ingredient_id=-1, '?', mnemonic) AS unit, price FROM (SELECT ingredient_id, IF(ingredient_id=-1, 'Manquant',  name) AS name, IF(ingredient_id=-1, '0.000',  ingredient_amount) AS amount, ingredient_unit_id, IF(ingredient_id=-1, 0.00, price) AS price FROM recipes_ingredients LEFT JOIN ingredients ON recipes_ingredients.ingredient_id=ingredients.id WHERE recipes_ingredients.recipe_id=" . $recipeId  . ") AS temp LEFT JOIN units ON temp.ingredient_unit_id=units.id");
 
-   if (!$ingredients_query_result) {
-      echo mysql_error();
+   if (!$ingredients_query) {
+      echo $ingredients_query->error;
    }
 
    $ingredientsNgArray = "[";
    $commaIngredient = "";
    $recipePrice = 0.00;
-   while ($ingredientRow = mysql_fetch_assoc($ingredients_query_result)) {
+   foreach($ingredients_query as $ingredientRow) {
       $ingredientName = $ingredientRow['name'];
       $ingredientAmount = $ingredientRow['amount'];
       $ingredientPrice = $ingredientRow['price'];

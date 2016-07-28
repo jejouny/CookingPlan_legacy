@@ -1,18 +1,17 @@
 <?php
-// Establishing Connection with Server by passing server_name, user_id and password as a parameter
-$connection = mysql_connect("localhost", "root", "Emmanuelle_83");
-// Selecting Database
-$db = mysql_select_db("cooking_plan_db", $connection);
+// Database connection
+$connection = new mysqli("localhost", "root", "Emmanuelle_83", "cooking_plan_db");
 session_start();// Starting Session
 // Storing Session
-$user_check=$_SESSION['login'];
+$user_check = $_SESSION['login'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql=mysql_query("select login, account_id from users where login='$user_check'", $connection);
-$row = mysql_fetch_assoc($ses_sql);
-$login =$row['login'];
-$account=$row['account_id'];
+$query = $connection->query("select login, account_id from users where login='$user_check'");
+$row = $query->fetch_array();
+$login = $row['login'];
+$account = $row['account_id'];
 if(!isset($login)){
-mysql_close($connection); // Closing Connection
-header('Location: index.php'); // Redirecting To Home Page
+   $query->close();
+   $connection->close(); // Closing Connection
+   header('Location: index.php'); // Redirecting To Home Page
 }
 ?>

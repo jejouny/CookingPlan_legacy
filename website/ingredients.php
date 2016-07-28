@@ -1,14 +1,14 @@
 <?php
 // To init the angular structure from the sql request
-mysql_query ("set character_set_results='utf8'");
-$query_result = mysql_query("SELECT ingredients.id, ingredients.name, ingredients.picture, ingredients.price, units.id AS unit_id, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'", $connection);
-if (!$query_result) {
-   echo mysql_error();
+$connection->query ("set character_set_results='utf8'");
+$query = $connection->query("SELECT ingredients.id, ingredients.name, ingredients.picture, ingredients.price, units.id AS unit_id, units.mnemonic AS unit FROM ingredients LEFT JOIN units ON units.id=unit_id WHERE account_id='$account'");
+if (!$query) {
+   echo $query->error;
 }
 
 $ingredientsNgArray = "ingredients=[";
 $comma = "";
-while ($row = mysql_fetch_assoc($query_result)) {
+foreach($query as $row) {
    $ingredientId = $row['id'];
    $ingredientName = $row['name'];
    $ingredientPicture = $row['picture'];

@@ -3,18 +3,18 @@ include('session.php');
 
 // To populate the unit combobox
 $unitList = "";
-mysql_query ("set character_set_results='utf8'");
+$connection->query("set character_set_results='utf8'");
 
 // Populate the combobox
-$query_result = mysql_query("SELECT id, mnemonic AS unit FROM units", $connection);
-if (!$query_result) {
-   echo mysql_error();
+$query = $connection->query("SELECT id, mnemonic AS unit FROM units");
+if (!$query) {
+   echo $query->error;
 }
 else {
    // For Angular
    $unitsNgArray = "units=[";
    $comma = "";
-   while ($row = mysql_fetch_assoc($query_result)) {
+   foreach($query as $row) {
       $unitId = $row['id'];
       $unitName = $row['unit'];
       $unitsNgArray = $unitsNgArray . $comma  . "{id:'" . $unitId . "', name:'" . $unitName . "'}";
