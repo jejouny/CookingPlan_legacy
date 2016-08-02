@@ -1,4 +1,4 @@
-var app = angular.module("cooking_plan",['ngSanitize', 'ui.bootstrap']);
+var app = angular.module("cooking_plan",['ngSanitize', 'ui.bootstrap', 'ngRoute']);
 
 app.controller("tabCtrl",function($scope){
     $scope.tabSelected = "#ingredients";
@@ -173,7 +173,7 @@ app.controller('comboboxCtrl', ['$scope', '$sce', function($scope, $sce) {
 }]);
 
 // To edit/create modal dialogs
-app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', function($scope, $uibModal, $log, $http) {
+app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$window', '$location', function($scope, $uibModal, $log, $http, $window, $location) {
 
    // Function to create a modal dialog
    function openModalDialog(template, acceptCallback, rejectCallback)
@@ -204,23 +204,30 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', func
 
    // Edit button callback
    $scope.editIngredient = function() {
+      $scope.ingredient.newName = $scope.ingredient.name;
+      $scope.ingredient.newPicture = $scope.ingredient.picture;
+      $scope.ingredient.newPrice = $scope.ingredient.price;
+      $scope.ingredient.newUnitId = $scope.ingredient.unitId;
 
 
       // Callback for the dialog
       function commitIngredient() {
+
          // Call the PHP function
          var request = $http({
                               method: "post",
                               url: "commit_ingredient.php",
                               data: {
                                      id: $scope.ingredient.id,
-                                     name: $scope.newName,
-                                     picture: $scope.newPicture,
-                                     price: $scope.newPrice,
-                                     unitId: $scope.newUnitId
+                                     name: $scope.ingredient.newName,
+                                     picture: $scope.ingredient.newPicture,
+                                     price: $scope.ingredient.newPrice,
+                                     unitId: $scope.ingredient.newUnitId
                               },
                               headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                           });
+                           }).then(function(response) { $location.path('/ingredients.php');
+                                                        $window.location.reload();
+                                                      });
       }
 
       openModalDialog('ingredient_form.php', commitIngredient, null);
