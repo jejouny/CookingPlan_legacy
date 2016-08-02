@@ -100,6 +100,11 @@ color:#FFFFFF;
   border:2px solid #2887C6;
 }
 
+.modal-dialog-button.disabled{
+  background-color: #a6a6a6;
+  cursor: default;
+}
+
 .content-wrapper > div{
   background-color: #fff;
   padding: 20px;
@@ -418,5 +423,5 @@ vertical-align:middle;
 font-family:raleway;
 font-size:16px;
 margin:0px 0px 8px 0px;
-width:96%;
+width:94%;
 }

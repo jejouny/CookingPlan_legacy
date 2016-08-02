@@ -25,6 +25,7 @@ else {
 }
 ?>
 
+<form name="ingredientForm">
 <div class="modal-header">
     <p class="search-result-content">Modification de {{ingredient.name}}</p>
 </div>
@@ -36,7 +37,7 @@ else {
             <p class="formular-label-content">Description :</p>
          </td>
          <td class="formular-input-cell">
-            <textarea class="formular-input-content" style="resize:vertical;" rows="2" cols="20" ng-model="ingredient.newName" ng-bind-html=ingredient.name></textarea>
+            <textarea class="formular-input-content" style="resize:vertical;" rows="2" cols="20" ng-model="ingredient.newName" maxlength="120" ng-bind-html="ingredient.name" required></textarea>
          </td>
       </tr>
       <tr>
@@ -44,7 +45,7 @@ else {
             <p class="formular-label-content">Image :</p>
          </td>
          <td class="formular-input-cell">
-            <input class="formular-input-content" type="file" accept="image/*" style="width:94%" ng-model="ingredient.newPicture"></input>
+            <input class="formular-input-content" id="ingredientPictureInput" type="file" accept="image/*" style="width:95%" ng-model="ingredient.newPicture" ng-controller="imageBrowserCtrl" on-file-change="showIngredientImage()"></input>
          </td>
       </tr>
  
@@ -53,7 +54,7 @@ else {
             <p class="formular-label-content">Prix :</p>
          </td>
          <td class="formular-input-cell">
-            <input class="formular-input-content" type="number" step="0.05" value="{{ingredient.price}}" ng-model="ingredient.newPrice"></input>
+            <input class="formular-input-content" type="number" step="0.05" value="{{ingredient.price}}" ng-model="ingredient.newPrice" required></input>
          </td>
       </tr>
       <tr>
@@ -61,14 +62,14 @@ else {
             <p class="formular-label-content">Unité :</p>
          </td>
          <td class="formular-input-cell">
-            <select class="formular-input-content" style="width:99%;margin-bottom:0px;" ng-init="<?php echo $unitsNgArray; ?>" ng-controller="comboboxCtrl" ng-model="ingredient.newUnitId" ng-bind-html="populateUnitCombobox()">
+            <select class="formular-input-content" style="width:100%;margin-bottom:0px;" ng-init="<?php echo $unitsNgArray; ?>" ng-controller="comboboxCtrl" ng-model="ingredient.newUnitId" ng-bind-html="populateUnitCombobox()">
             </select>
          </td>
       </tr>
    </table>
  </div>
  <div class="modal-footer">
-     <a href="" class="modal-dialog-button" ng-click="accept()"/>Valider</a>
+     <a href="" class="modal-dialog-button" ng-class="{disabled: !ingredientForm.$valid}" ng-click="accept(ingredientForm.$valid);"/>Valider</a>
      <a href="" class="modal-dialog-button" ng-click="reject()"/>Annuler</a>
  </div>
-
+</form>

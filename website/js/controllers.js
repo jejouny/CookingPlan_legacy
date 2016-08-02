@@ -172,6 +172,29 @@ app.controller('comboboxCtrl', ['$scope', '$sce', function($scope, $sce) {
 
 }]);
 
+// To populate image browsers
+app.directive('onFileChange', function() {
+   return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                     var bindedFunctionName = attrs.onFileChange;
+                     bindedFunctionName = bindedFunctionName.replace(/[()]/g, '');
+                     var onChangeFunc = scope.$eval(bindedFunctionName);
+                     element.bind('change', onChangeFunc);
+                  }
+         };
+});
+
+app.controller('imageBrowserCtrl', ['$scope', function($scope) {
+
+   // Ingredient image browser
+   $scope.showIngredientImage = function () {
+      var imagePath = $scope.ingredient.newPicture;
+      //var test = angular.element('#ingredientPictureInput');
+      //var test2=0;
+   }
+}]);
+
 // To edit/create modal dialogs
 app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$window', '$location', function($scope, $uibModal, $log, $http, $window, $location) {
 
@@ -180,11 +203,13 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
    {
       function ModalInstanceCtrl($scope, $uibModalInstance) {
          $scope.form = {}
-         $scope.accept = function() {
-                                       if (acceptCallback) {
-                                          acceptCallback();
+         $scope.accept = function(canAccept) {
+                                       if (canAccept) {
+                                          if (acceptCallback) {
+                                             acceptCallback();
+                                          }
+                                          $uibModalInstance.close('closed');
                                        }
-                                       $uibModalInstance.close('closed');
                                     }
          $scope.reject = function() {
                                        if (rejectCallback) {
@@ -214,25 +239,24 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
       function commitIngredient() {
 
          // Call the PHP function
-         var request = $http({
-                              method: "post",
-                              url: "commit_ingredient.php",
-                              data: {
-                                     id: $scope.ingredient.id,
-                                     name: $scope.ingredient.newName,
-                                     picture: $scope.ingredient.newPicture,
-                                     price: $scope.ingredient.newPrice,
-                                     unitId: $scope.ingredient.newUnitId
-                              },
-                              headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                           }).then(function(response) { $location.path('/ingredients.php');
-                                                        $window.location.reload();
-                                                      });
+            var request = $http({
+                                 method: "post",
+                                 url: "commit_ingredient.php",
+                                 data: {
+                                        id: $scope.ingredient.id,
+                                        name: $scope.ingredient.newName,
+                                        picture: $scope.ingredient.newPicture,
+                                        price: $scope.ingredient.newPrice,
+                                        unitId: $scope.ingredient.newUnitId
+                                 },
+                                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                              }).then(function(response) { $location.path('/ingredients.php');
+                                                           $window.location.reload();
+                                                         });
       }
 
       openModalDialog('ingredient_form.php', commitIngredient, null);
    }
-
 
    // Remove ingredient callback
    $scope.removeIngredient = function() {
