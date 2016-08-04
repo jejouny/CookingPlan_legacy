@@ -12,7 +12,23 @@ $picture = $request->picture;
 $price = $request->price;
 $unitId = $request->unitId;
 
-$query = $connection->query("UPDATE ingredients SET name=\"" . $name  . "\", picture=\"" . $picture  . "\", price=" . $price . ", unit_id=" . $unitId . " WHERE id=" . $id  . ";");
+$queryString = "UPDATE ingredients SET name=\"" . $name  . "\",";
+if (!empty($picture)) {
+ // Format the file name
+ $extension = $path_parts($picture)['extension'];
+
+ // Upload the file
+ $targetFile = "uploads/" . $id . "." . $extension;
+ if (!move_uploaded_file($picture, $targetFile)) {
+   echo "Transfer issue";
+ }
+ else {
+    $queryString = $queryString . " picture=\"" . $id . "." . $extension  . "\",";
+ }
+}
+$queryString = $queryString . " price=" . $price . ", unit_id=" . $unitId . " WHERE id=" . $id  . ";";
+
+$query = $connection->query($queryString);
 
 
 if (!$query) {
