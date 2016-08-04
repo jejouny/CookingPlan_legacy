@@ -10,8 +10,10 @@ width:960px;
 margin:10px 10px 10px 10px;
 font-family:raleway
 }
-span {
-color:red
+.error {
+color:red;
+font-family:raleway;
+text-align:center;
 }
 h2 {
 background-color:#FEFFED;

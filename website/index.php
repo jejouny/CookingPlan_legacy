@@ -26,7 +26,9 @@ header("location: profile.php");
                <br>
                <br>
                <input name="submit" type="submit" value=" Connexion ">
-               <span><?php echo $error; ?></span>
+               <div class="error">
+                  <span><?php echo $error; ?></span>
+               </div>
             </form>
          </div>
    </body>

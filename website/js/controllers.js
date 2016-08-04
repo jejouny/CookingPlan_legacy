@@ -1,4 +1,4 @@
-var app = angular.module("cooking_plan",['ngSanitize', 'ui.bootstrap', 'ngRoute']);
+var app = angular.module("cooking_plan",['ngSanitize', 'ui.bootstrap', 'ngRoute', 'ngMessages']);
 
 app.controller("tabCtrl",function($scope){
     $scope.tabSelected = "#ingredients";
@@ -172,7 +172,7 @@ app.controller('comboboxCtrl', ['$scope', '$sce', function($scope, $sce) {
 
 }]);
 
-// To populate image browsers
+// To add a callback of file input
 app.directive('onFileChange', function() {
    return {
             restrict: 'A',
@@ -185,13 +185,20 @@ app.directive('onFileChange', function() {
          };
 });
 
+// To preview the selected image
 app.controller('imageBrowserCtrl', ['$scope', function($scope) {
 
    // Ingredient image browser
    $scope.showIngredientImage = function () {
-      var imagePath = $scope.ingredient.newPicture;
-      //var test = angular.element('#ingredientPictureInput');
-      //var test2=0;
+     var pictureView = document.getElementById('ingredientPictureView');
+     var file = document.getElementById('ingredientPictureInput').files[0];
+
+      var imageReader = new FileReader();
+      imageReader.addEventListener('load', function() { pictureView.src = imageReader.result; }, false);
+
+      if (file) {
+         imageReader.readAsDataURL(file);
+      }
    }
 }]);
 
