@@ -32,7 +32,7 @@ else {
  <div class="modal-body" ng-controller='modalDialogsCtrl'>
    <table class="formular-main-layout">
       <tr>
-         <td class="formular-icon-cell" rowspan="4"><div><img id="ingredientPictureView" src="{{ingredient.picture}}" height="100px"></div></td>
+         <td class="formular-icon-cell" rowspan="4"><div><img name="ingredientPictureView" src="{{ingredient.picture}}" height="100px"></div></td>
          <td class="formular-label-cell" style="vertical-align:top;">
             <p class="formular-label-content">Description :</p>
          </td>
@@ -45,7 +45,7 @@ else {
             <p class="formular-label-content">Image :</p>
          </td>
          <td class="formular-input-cell">
-            <input class="formular-input-content" id="ingredientPictureInput" type="file" accept="image/*" style="width:95%" ng-model="ingredient.newPicture" ng-controller="imageBrowserCtrl" on-file-change="showIngredientImage()"></input>
+            <input class="formular-input-content" name="ingredientPictureInput" type="file" accept="image/*" style="width:95%" ng-model="ingredient.newPicture" ng-controller="imageBrowserCtrl" on-file-change="showIngredientImage()" max-file-size="300000"></input>
          </td>
       </tr>
  
@@ -77,7 +77,11 @@ else {
    <span ng-message="min">Prix d'ingrédient invalide!</span>
    <span ng-message="max">Prix d'ingrédient trop élevé!</span>
    <span ng-message="number">Prix d'ingrédient invalide!</span>
- </div><br>
+ </div>
+ <div ng-messages="ingredientForm.ingredientPictureInput.$error" class="error">
+   <span ng-message="maxFileSize">Image trop volumineuse!</span>
+ </div>
+<br>
 
  <div class="modal-footer">
      <a href="" class="modal-dialog-button" ng-class="{disabled: !ingredientForm.$valid}" ng-click="accept(ingredientForm.$valid);"/>Valider</a>

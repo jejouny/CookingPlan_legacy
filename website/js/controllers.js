@@ -185,13 +185,36 @@ app.directive('onFileChange', function() {
          };
 });
 
+// To control the selected file size
+// File size in bytes
+app.directive('maxFileSize', function() {
+   return {
+            require:'ngModel',
+            link: function (scope, element, attrs, ctrl) {
+                     ctrl.$setValidity('maxFileSize', true);
+                     element.bind('change', function() {
+                                                var maxFileSize = attrs.maxFileSize;
+                                                var fileSize = 0;
+                                                if (this.files[0]) {
+                                                   fileSize = this.files[0].size;
+                                                }
+                                                ctrl.$setValidity('maxFileSize', fileSize < maxFileSize);
+                                                scope.$apply(function() {
+                                                      ctrl.$setViewValue(element.val());
+                                                      ctrl.$render();
+                                                      });
+                                                   });
+                  }
+         };
+});
+
 // To preview the selected image
 app.controller('imageBrowserCtrl', ['$scope', function($scope) {
 
    // Ingredient image browser
    $scope.showIngredientImage = function () {
-     var pictureView = document.getElementById('ingredientPictureView');
-     var file = document.getElementById('ingredientPictureInput').files[0];
+     var pictureView = document.getElementsByName('ingredientPictureView')[0];
+     var file = document.getElementsByName('ingredientPictureInput')[0].files[0];
 
       var imageReader = new FileReader();
       imageReader.addEventListener('load', function() { pictureView.src = imageReader.result; }, false);
