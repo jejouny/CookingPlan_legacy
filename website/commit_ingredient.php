@@ -15,7 +15,7 @@ $unitId = $request->unitId;
 $queryString = "UPDATE ingredients SET name=\"" . $name  . "\",";
 if (!empty($picture)) {
  // Format the file name
- $extension = $path_parts($picture)['extension'];
+ $extension = pathinfo($picture, PATHINFO_EXTENSION);
 
  // Upload the file
  $targetFile = "uploads/" . $id . "." . $extension;
