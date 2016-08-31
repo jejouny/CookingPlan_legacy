@@ -27,7 +27,7 @@ else {
 
 <form name="ingredientForm">
 <div class="modal-header">
-    <p class="search-result-content">Modification de {{ingredient.name}}</p>
+    <p class="search-result-content" ng-bind="formatIngredientDialogTitle(ingredient)"></p>
 </div>
  <div class="modal-body" ng-controller='modalDialogsCtrl'>
    <table class="formular-main-layout">
@@ -45,7 +45,7 @@ else {
             <p class="formular-label-content">Image :</p>
          </td>
          <td class="formular-input-cell">
-            <input class="formular-input-content" name="ingredientPictureInput" type="file" accept="image/*" style="width:95%" ng-model="ingredient.newPicture" ng-controller="imageBrowserCtrl" on-file-change="showIngredientImage()" max-file-size="300000"></input>
+            <input class="formular-input-content" name="ingredientPictureInput" type="file" accept="image/*" style="width:95%" ng-model="ingredient.newPicture" ng-controller="imageBrowserCtrl" on-file-change="showIngredientImage()" max-file-size="300000" empty-image></input>
          </td>
       </tr>
  
@@ -80,6 +80,7 @@ else {
  </div>
  <div ng-messages="ingredientForm.ingredientPictureInput.$error" class="error">
    <span ng-message="maxFileSize">Image trop volumineuse!</span>
+   <span ng-message="emptyImage">Pas d'image sélectionnée!</span>
  </div>
 <br>
 

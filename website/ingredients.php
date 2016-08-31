@@ -36,14 +36,23 @@ $ingredientsNgArray = $ingredientsNgArray . "]";
 
 // Provide the ingredient array to Angular
 $ingredientsTable = "\n<div class=\"tab-content\" ng-controller=\"filterIngredientCtrl\" ng-init=\"" . $ingredientsNgArray . "\">\n";
-$ingredientsTable = $ingredientsTable . "   <form class=\"search-bar\">\n";
-$ingredientsTable = $ingredientsTable . "     <table>\n";
-$ingredientsTable = $ingredientsTable . "        <tr>\n";
-$ingredientsTable = $ingredientsTable . "           <td class=\"search-icon-cell\"><i class=\"material-icons\" style=\"padding:0\">search</i></td>\n";
-$ingredientsTable = $ingredientsTable . "           <td class=\"search-input-cell\"><input class=\"search-input\" type=\"text\" placeholder=\"Rechercher un ingrédient\" ng-model=\"searchIngredient\"></td>\n";
-$ingredientsTable = $ingredientsTable . "        </tr>\n";
-$ingredientsTable = $ingredientsTable . "      </table>\n";
-$ingredientsTable = $ingredientsTable . "   </form>\n";
+$ingredientsTable = $ingredientsTable . "   <table style=\"padding-bottom:20px;\">\n";
+$ingredientsTable = $ingredientsTable . "      <tr>\n";
+$ingredientsTable = $ingredientsTable . "         <td style=\"width:100%;\">\n";
+$ingredientsTable = $ingredientsTable . "            <form class=\"search-bar\">\n";
+$ingredientsTable = $ingredientsTable . "               <table>\n";
+$ingredientsTable = $ingredientsTable . "                  <tr>\n";
+$ingredientsTable = $ingredientsTable . "                     <td class=\"search-icon-cell\"><i class=\"material-icons\" style=\"padding:0\">search</i></td>\n";
+$ingredientsTable = $ingredientsTable . "                     <td class=\"search-input-cell\"><input class=\"search-input\" type=\"text\" placeholder=\"Rechercher un ingrédient\" ng-model=\"searchIngredient\"></td>\n";
+$ingredientsTable = $ingredientsTable . "                  </tr>\n";
+$ingredientsTable = $ingredientsTable . "               </table>\n";
+$ingredientsTable = $ingredientsTable . "            </form>\n";
+$ingredientsTable = $ingredientsTable . "         </td>\n";
+$ingredientsTable = $ingredientsTable . "         <td style=\"padding-left:10px;\" ng-controller=\"modalDialogsCtrl\">\n";
+$ingredientsTable = $ingredientsTable . "            <a href=\"\" class=\"modal-dialog-button\" ng-click=\"editIngredient()\"/>Ajouter</a>\n";
+$ingredientsTable = $ingredientsTable . "         </td>\n";
+$ingredientsTable = $ingredientsTable . "      </tr>\n";
+$ingredientsTable = $ingredientsTable . "   </table>\n";
 
 $ingredientsTable = $ingredientsTable . "   <div class=\"search-result\">\n";
 $ingredientsTable = $ingredientsTable . "      <table>\n";

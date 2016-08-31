@@ -208,6 +208,33 @@ app.directive('maxFileSize', function() {
          };
 });
 
+// To control the selected file
+app.directive('emptyImage', function() {
+   return {
+            require:'ngModel',
+            link: function (scope, element, attrs, ctrl) {
+
+                     var validity = true;
+                     if (scope.ingredient.id == -1) {
+                        validity = false;
+                     }
+                     ctrl.$setValidity('emptyImage', validity);
+                     element.bind('change', function() {
+                                                var validity = true;
+                                                if (scope.ingredient.id == -1 && !this.files[0]) {
+                                                   validity = false;
+                                                }
+                                                ctrl.$setValidity('emptyImage', validity);
+                                                scope.$apply(function() {
+                                                      ctrl.$setViewValue(element.val());
+                                                      ctrl.$render();
+                                                      });
+                                                   });
+                  }
+         };
+});
+
+
 // To preview the selected image
 app.controller('imageBrowserCtrl', ['$scope', function($scope) {
 
@@ -259,10 +286,22 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
 
    // Edit button callback
    $scope.editIngredient = function() {
+
+      // No ingredient defined => that's a creation
+      var ingredientCreation = !angular.isDefined($scope.ingredient);
+
+      // Ingredient creation
+      if (ingredientCreation) {
+         $scope.ingredient = {id:'-1',
+                              name:'', 
+                              price:'0.0',
+                              picture:'res/no_picture.png',
+                              unitId: '-1'};
+      }
+
       $scope.ingredient.newName = $scope.ingredient.name;
       $scope.ingredient.newPrice = $scope.ingredient.price;
       $scope.ingredient.newUnitId = $scope.ingredient.unitId;
-
 
       // Callback for the dialog
       function commitIngredient() {
@@ -287,6 +326,17 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
       }
 
       openModalDialog('ingredient_form.php', commitIngredient, null);
+   }
+
+   // To display the ingredient creation/edition dialog title
+   $scope.formatIngredientDialogTitle = function(ingredient) {
+
+      var title = 'Ajout d\'un ingrédient';
+      if (ingredient.id != -1) {
+         title = 'Modification de l\'ingrédient \"' + ingredient.name + "\"";
+      }
+
+      return title;
    }
 
    // Remove ingredient callback
