@@ -1,7 +1,9 @@
 <?php
 include('session.php');
 
-$connection->query ("set character_set_results='utf8'");
+// To handle unicode characters at saving and loading
+$connection->query("set character_set_results='utf8'");
+$connection->query("set names utf8");
 
 $id = $_POST['id'];
 $name = $_POST['name'];
