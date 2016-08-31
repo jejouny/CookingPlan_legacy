@@ -260,27 +260,28 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
    // Edit button callback
    $scope.editIngredient = function() {
       $scope.ingredient.newName = $scope.ingredient.name;
-      $scope.ingredient.newPicture = $scope.ingredient.picture;
       $scope.ingredient.newPrice = $scope.ingredient.price;
       $scope.ingredient.newUnitId = $scope.ingredient.unitId;
 
 
       // Callback for the dialog
       function commitIngredient() {
+         var formData = new FormData();
+         formData.append('id', $scope.ingredient.id);
+         formData.append('oldPicture', $scope.ingredient.picture);
+         formData.append('picture', document.getElementsByName('ingredientPictureInput')[0].files[0]);
+         formData.append('name', $scope.ingredient.newName);
+         formData.append('price', $scope.ingredient.newPrice);
+         formData.append('unitId', $scope.ingredient.newUnitId);
 
          // Call the PHP function
-            var request = $http({
-                                 method: "post",
-                                 url: "commit_ingredient.php",
-                                 data: {
-                                        id: $scope.ingredient.id,
-                                        name: $scope.ingredient.newName,
-                                        picture: $scope.ingredient.newPicture,
-                                        price: $scope.ingredient.newPrice,
-                                        unitId: $scope.ingredient.newUnitId
-                                 },
-                                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                              }).then(function(response) { $location.path('/ingredients.php');
+         var request = $http({
+                                method: "post",
+                                url: "commit_ingredient.php",
+                                data: formData,
+                                transformRequest: angular.identity, // To set $_POST and $_FILES php globals
+                                headers: { 'Content-Type': undefined }
+                             }).then(function(response) { $location.path('/ingredients.php');
                                                            $window.location.reload();
                                                          });
       }

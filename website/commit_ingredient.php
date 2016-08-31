@@ -3,33 +3,36 @@ include('session.php');
 
 $connection->query ("set character_set_results='utf8'");
 
-$postData = file_get_contents("php://input");
-$request=json_decode($postData);
-
-$id = $request->id;
-$name = $request->name;
-$picture = $request->picture;
-$price = $request->price;
-$unitId = $request->unitId;
+$id = $_POST['id'];
+$name = $_POST['name'];
+$picture = "";
+if (!empty($_FILES)) {
+   $picture = $_FILES['picture']['tmp_name'];
+}
+$price = $_POST['price'];
+$unitId = $_POST['unitId'];
 
 $queryString = "UPDATE ingredients SET name=\"" . $name  . "\",";
 if (!empty($picture)) {
- // Format the file name
- $extension = pathinfo($picture, PATHINFO_EXTENSION);
+   // Format the file name
+   $extension = pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION);
 
- // Upload the file
- $targetFile = "uploads/" . $id . "." . $extension;
- if (!move_uploaded_file($picture, $targetFile)) {
-   echo "Transfer issue";
- }
- else {
-    $queryString = $queryString . " picture=\"" . $id . "." . $extension  . "\",";
- }
+   // Upload the file (ingredient id is used to format the picture file name
+   $targetFile = getcwd() . "/uploads/ingredient_pictures/" . $id . "." . $extension;
+   if (move_uploaded_file($picture, $targetFile)) {
+      $queryString = $queryString . " picture=\"" . $id . "." . $extension  . "\",";
+
+      // Remove the old picture if needed
+      $oldPicture = getcwd() . "/" . $_POST['oldPicture'];
+      $oldExtension = pathinfo($oldPicture, PATHINFO_EXTENSION);
+      if (oldExtension != extension) {
+         unlink($oldPicture);
+      }
+   }
 }
 $queryString = $queryString . " price=" . $price . ", unit_id=" . $unitId . " WHERE id=" . $id  . ";";
 
 $query = $connection->query($queryString);
-
 
 if (!$query) {
    echo $query->error;
