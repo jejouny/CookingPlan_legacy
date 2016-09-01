@@ -276,7 +276,6 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
                                     }
       }
 
-
       var modalInstance = $uibModal.open({ animation: true,
                                            templateUrl: template,
                                            controller: ModalInstanceCtrl,
@@ -358,7 +357,9 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
                                                           $window.location.reload();
                                                          });
       }
-      openModalDialog('ingredient_removal_form.php', removeIngredient, null);
+
+      // Pass the ingredient id to PHP form
+      openModalDialog('ingredient_removal_form.php?ingredientId='+$scope.ingredient.id, removeIngredient, null);
    }
 
 }]);

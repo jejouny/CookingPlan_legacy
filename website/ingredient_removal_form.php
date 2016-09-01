@@ -1,26 +1,27 @@
 <?php
 include('session.php');
 
-// To get the number of recipes referencing this ingredient
-/*$recipeCount = 0;
+$ingredientId = $_GET['ingredientId'];
+$message = "Voulez-vous vraiment supprimer l'ingrédient?";
 
-$query = $connection->query("SELECT COUNT(recipe_id) FROM recipes_ingredients WHERE ingredient_id=" . ingredient_id;
+// To get the number of recipes referencing this ingredient
+$query = $connection->query("SELECT COUNT(recipe_id) AS recipe_count FROM recipes_ingredients WHERE ingredient_id=" . $ingredientId . ";");
+
 if (!$query) {
    echo $query->error;
 }
 else {
-   // For Angular
-   $unitsNgArray = "units=[";
-   $comma = "";
-   foreach($query as $row) {
-      $unitId = $row['id'];
-      $unitName = $row['unit'];
-      $unitsNgArray = $unitsNgArray . $comma  . "{id:'" . $unitId . "', name:'" . $unitName . "'}";
-      $comma = ", ";
-   }
+   $row = $query->fetch_array();
+   $recipeCount = $row['recipe_count'];
+   $query->close();
 
-   $unitsNgArray = $unitsNgArray . "]";
-}*/
+   // Format the displayed message
+   if ($recipeCount > 0) {
+      $message = "L'ingrédient est utilisé dans " . $recipeCount . " recettes.<br>";
+      $message = $message . "Voulez-vous vraiment le supprimer?";
+   }
+}
+
 ?>
 
 <form name="ingredientRemovalForm">
@@ -28,7 +29,7 @@ else {
     <p class="search-result-content">Suppression de l'ingrédient "{{ingredient.name}}"</p>
 </div>
  <div class="modal-body" ng-controller='modalDialogsCtrl'>
-   <p class="formular-label-content">Etes vous sur de vouloir supprimer l'ingrédient?</p>
+   <p class="formular-label-content"><?php echo $message ?> </p>
  </div>
 <br>
 
