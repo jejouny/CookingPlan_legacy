@@ -341,7 +341,24 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
 
    // Remove ingredient callback
    $scope.removeIngredient = function() {
-      openModalDialog('ingredient_form.html', null, null);
+
+      // Callback for the dialog
+      function removeIngredient() {
+         var formData = new FormData();
+         formData.append('id', $scope.ingredient.id);
+
+         // Call the PHP function
+         var request = $http({
+                                method: "post",
+                                url: "remove_ingredient.php",
+                                data: formData,
+                                transformRequest: angular.identity, // To set $_POST and $_FILES php globals
+                                headers: { 'Content-Type': undefined }
+                             }).then(function(response) { $location.path('/ingredients.php');
+                                                          $window.location.reload();
+                                                         });
+      }
+      openModalDialog('ingredient_removal_form.php', removeIngredient, null);
    }
 
 }]);
