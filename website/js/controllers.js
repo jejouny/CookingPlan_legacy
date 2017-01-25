@@ -362,5 +362,49 @@ app.controller('modalDialogsCtrl', ['$scope', '$uibModal', '$log', '$http', '$wi
       openModalDialog('ingredient_removal_form.php?ingredientId='+$scope.ingredient.id, removeIngredient, null);
    }
 
+   // Edit recipe button callback
+   $scope.editRecipe = function() {
+
+     // // No recipe defined => that's a creation
+     // var recipeCreation = !angular.isDefined($scope.recipe);
+
+     // // Recipe creation
+     // if (recipeCreation) {
+     //    $scope.recipe = {id:'-1',
+     //                     name:'', 
+     //                     price:'0.0',
+     //                     picture:'res/no_picture.png',
+     //                     unitId: '-1'};
+     // }
+
+     // $scope.recipe.newName = $scope.recipe.name;
+     // $scope.recipe.newPrice = $scope.recipe.price;
+     // $scope.recipe.newUnitId = $scope.recipe.unitId;
+
+     // // Callback for the dialog
+     // function commitRecipe() {
+     //    var formData = new FormData();
+     //    formData.append('id', $scope.recipe.id);
+     //    formData.append('oldPicture', $scope.recipe.picture);
+     //    formData.append('picture', document.getElementsByName('recipePictureInput')[0].files[0]);
+     //    formData.append('name', $scope.recipe.newName);
+     //    formData.append('price', $scope.recipe.newPrice);
+     //    formData.append('unitId', $scope.recipe.newUnitId);
+
+     //    // Call the PHP function
+     //    var request = $http({
+     //                           method: "post",
+     //                           url: "commit_recipe.php",
+     //                           data: formData,
+     //                           transformRequest: angular.identity, // To set $_POST and $_FILES php globals
+     //                           headers: { 'Content-Type': undefined }
+     //                        }).then(function(response) { $location.path('/recipes.php');
+     //                                                      $window.location.reload();
+     //                                                    });
+     // }
+
+     // openModalDialog('recipe_form.php', commitRecipe, null);
+   }
+
 }]);
 

@@ -64,14 +64,23 @@ $recipesNgArray = $recipesNgArray . "]";
 
 // Provide the recipe array to Angular
 $recipesTable = "\n<div class=\"tab-content\" ng-controller=\"filterRecipeCtrl\" ng-init=\"" . $recipesNgArray . "\">\n";
-$recipesTable = $recipesTable . "   <form class=\"search-bar\">\n";
-$recipesTable = $recipesTable . "     <table>\n";
-$recipesTable = $recipesTable . "        <tr>\n";
-$recipesTable = $recipesTable . "           <td class=\"search-icon-cell\"><i class=\"material-icons\" style=\"padding:0\">search</i></td>\n";
-$recipesTable = $recipesTable . "           <td class=\"search-input-cell\"><input class=\"search-input\" type=\"text\" placeholder=\"Rechercher une recette\" ng-model=\"searchRecipe\"></td>\n";
-$recipesTable = $recipesTable . "        </tr>\n";
-$recipesTable = $recipesTable . "      </table>\n";
-$recipesTable = $recipesTable . "   </form>\n";
+$recipesTable = $recipesTable . "   <table style=\"padding-bottom:20px;\">\n";
+$recipesTable = $recipesTable . "      <tr>\n";
+$recipesTable = $recipesTable . "         <td style=\"width:100%;\">\n";
+$recipesTable = $recipesTable . "            <form class=\"search-bar\">\n";
+$recipesTable = $recipesTable . "               <table>\n";
+$recipesTable = $recipesTable . "                  <tr>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-icon-cell\"><i class=\"material-icons\" style=\"padding:0\">search</i></td>\n";
+$recipesTable = $recipesTable . "                     <td class=\"search-input-cell\"><input class=\"search-input\" type=\"text\" placeholder=\"Rechercher une recette\" ng-model=\"searchRecipe\"></td>\n";
+$recipesTable = $recipesTable . "                  </tr>\n";
+$recipesTable = $recipesTable . "               </table>\n";
+$recipesTable = $recipesTable . "            </form>\n";
+$recipesTable = $recipesTable . "         </td>\n";
+$recipesTable = $recipesTable . "         <td style=\"padding-left:10px;\" ng-controller=\"modalDialogsCtrl\">\n";
+$recipesTable = $recipesTable . "            <a href=\"\" class=\"modal-dialog-button\" ng-click=\"editRecipe()\"/>Ajouter</a>\n";
+$recipesTable = $recipesTable . "         </td>\n";
+$recipesTable = $recipesTable . "      </tr>\n";
+$recipesTable = $recipesTable . "   </table>\n";
 $recipesTable = $recipesTable . "   <div class=\"search-result\">\n";
 $recipesTable = $recipesTable . "      <table>\n";
 $recipesTable = $recipesTable . "         <tr ng-repeat=\"recipe in recipes | filter:{name : searchRecipe}\">\n"; // To filter on recipe names
